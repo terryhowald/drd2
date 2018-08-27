@@ -1,0 +1,3 @@
+/home/terry/repos/drd2/build/CMakeFiles/rebuild_cache.dir
+/home/terry/repos/drd2/build/CMakeFiles/drd2.dir
+/home/terry/repos/drd2/build/CMakeFiles/edit_cache.dir

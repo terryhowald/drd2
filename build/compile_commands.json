@@ -1,0 +1,47 @@
+[
+{
+  "directory": "/home/terry/repos/drd2/build",
+  "command": "/usr/bin/x86_64-linux-gnu-g++-7   -I/usr/include/SDL2   -std=c++17 -g   -o CMakeFiles/drd2.dir/main.cpp.o -c /home/terry/repos/drd2/main.cpp",
+  "file": "/home/terry/repos/drd2/main.cpp"
+},
+{
+  "directory": "/home/terry/repos/drd2/build",
+  "command": "/usr/bin/x86_64-linux-gnu-g++-7   -I/usr/include/SDL2   -std=c++17 -g   -o CMakeFiles/drd2.dir/game.cpp.o -c /home/terry/repos/drd2/game.cpp",
+  "file": "/home/terry/repos/drd2/game.cpp"
+},
+{
+  "directory": "/home/terry/repos/drd2/build",
+  "command": "/usr/bin/x86_64-linux-gnu-g++-7   -I/usr/include/SDL2   -std=c++17 -g   -o CMakeFiles/drd2.dir/summary.cpp.o -c /home/terry/repos/drd2/summary.cpp",
+  "file": "/home/terry/repos/drd2/summary.cpp"
+},
+{
+  "directory": "/home/terry/repos/drd2/build",
+  "command": "/usr/bin/x86_64-linux-gnu-g++-7   -I/usr/include/SDL2   -std=c++17 -g   -o CMakeFiles/drd2.dir/sprite.cpp.o -c /home/terry/repos/drd2/sprite.cpp",
+  "file": "/home/terry/repos/drd2/sprite.cpp"
+},
+{
+  "directory": "/home/terry/repos/drd2/build",
+  "command": "/usr/bin/x86_64-linux-gnu-g++-7   -I/usr/include/SDL2   -std=c++17 -g   -o CMakeFiles/drd2.dir/spritegroup.cpp.o -c /home/terry/repos/drd2/spritegroup.cpp",
+  "file": "/home/terry/repos/drd2/spritegroup.cpp"
+},
+{
+  "directory": "/home/terry/repos/drd2/build",
+  "command": "/usr/bin/x86_64-linux-gnu-g++-7   -I/usr/include/SDL2   -std=c++17 -g   -o CMakeFiles/drd2.dir/player.cpp.o -c /home/terry/repos/drd2/player.cpp",
+  "file": "/home/terry/repos/drd2/player.cpp"
+},
+{
+  "directory": "/home/terry/repos/drd2/build",
+  "command": "/usr/bin/x86_64-linux-gnu-g++-7   -I/usr/include/SDL2   -std=c++17 -g   -o CMakeFiles/drd2.dir/enemy.cpp.o -c /home/terry/repos/drd2/enemy.cpp",
+  "file": "/home/terry/repos/drd2/enemy.cpp"
+},
+{
+  "directory": "/home/terry/repos/drd2/build",
+  "command": "/usr/bin/x86_64-linux-gnu-g++-7   -I/usr/include/SDL2   -std=c++17 -g   -o CMakeFiles/drd2.dir/tile.cpp.o -c /home/terry/repos/drd2/tile.cpp",
+  "file": "/home/terry/repos/drd2/tile.cpp"
+},
+{
+  "directory": "/home/terry/repos/drd2/build",
+  "command": "/usr/bin/x86_64-linux-gnu-g++-7   -I/usr/include/SDL2   -std=c++17 -g   -o CMakeFiles/drd2.dir/egg.cpp.o -c /home/terry/repos/drd2/egg.cpp",
+  "file": "/home/terry/repos/drd2/egg.cpp"
+}
+]
