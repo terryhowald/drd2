@@ -22,6 +22,7 @@ CMakeFiles/drd2.dir/game.cpp.o: ../tile.h
 CMakeFiles/drd2.dir/main.cpp.o: ../game.h
 CMakeFiles/drd2.dir/main.cpp.o: ../main.cpp
 
+CMakeFiles/drd2.dir/player.cpp.o: ../game.h
 CMakeFiles/drd2.dir/player.cpp.o: ../player.cpp
 CMakeFiles/drd2.dir/player.cpp.o: ../player.h
 CMakeFiles/drd2.dir/player.cpp.o: ../sprite.h

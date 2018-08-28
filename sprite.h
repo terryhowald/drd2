@@ -19,6 +19,7 @@ protected:
     SDL_Rect m_Rect;
     int m_iXPos;
     int m_iYPos;
+    double m_dAngle;
 
 private:
     SDL_Texture* LoadTexture(const char* fileName);

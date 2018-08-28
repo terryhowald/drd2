@@ -21,7 +21,9 @@ enum
     NUM_TUNNELS = 6,
     DIR_HORIZONTAL = 0,
     DIR_VERTICAL = 1,
-    HEADS_OR_TAILS = 2
+    HEADS_OR_TAILS = 2,
+    TUNNEL_SPEED = 3,
+    ROCK_SPEED = 1
 };  
 
 class Game 

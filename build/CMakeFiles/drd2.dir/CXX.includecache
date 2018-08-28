@@ -59,6 +59,8 @@ game.h
 /home/terry/repos/drd2/player.cpp
 player.h
 /home/terry/repos/drd2/player.h
+game.h
+/home/terry/repos/drd2/game.h
 
 /home/terry/repos/drd2/player.h
 sprite.h

@@ -11,8 +11,11 @@ public:
 
     void Update();
     void Move();
+    void Set_Angle(double dAngle);
 
 private:
+    int m_iXSpeed;
+    int m_iYSpeed;
 };
 
 #endif // PLAYER_H

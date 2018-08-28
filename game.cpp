@@ -135,7 +135,7 @@ void Game::New()
     LoadMap();
 
     // Create player
-    player = new Player("/home/terry/repos/drd2/img/horta.png", 5, 5);
+    player = new Player("/home/terry/repos/drd2/img/horta.png", 5*TILE_SIZE, 5*TILE_SIZE);
  
     // Let 'er rip!
     Run();
@@ -187,7 +187,7 @@ void Game::Events()
             break;            
         case SDL_KEYDOWN:
         case SDL_KEYUP:
-            //player->Move();
+            player->Move();
             break;         
         case SDL_QUIT:
         case SDL_CONTROLLERBUTTONDOWN:
@@ -295,7 +295,7 @@ void Game::LoadMap()
             int iTile = tilemap[row][column];
             if(iTile)
             {
-                Tile *tile = new Tile("/home/terry/repos/drd2/img/rock_tile.png", column, row); 
+                Tile *tile = new Tile("/home/terry/repos/drd2/img/rock_tile.png", column*TILE_SIZE, row*TILE_SIZE); 
                 tilegroup->Add(tile);
             }
         }

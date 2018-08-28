@@ -3,10 +3,10 @@
 #include <SDL2/SDL_image.h>
 #include "game.h"
 
-Sprite::Sprite(const char* fileName, int xpos, int ypos) :
-    m_pTexture(nullptr), m_iXPos(xpos), m_iYPos(ypos)
+Sprite::Sprite(const char *fileName, int xpos, int ypos) : 
+    m_pTexture(nullptr), m_iXPos(xpos), m_iYPos(ypos), m_dAngle(0.0)
 {
-    if(nullptr != fileName)
+    if (nullptr != fileName)
     {
         m_pTexture = LoadTexture(fileName);
     }
@@ -17,7 +17,7 @@ Sprite::Sprite(const char* fileName, int xpos, int ypos) :
 
 Sprite::~Sprite()
 {
-    if(nullptr != m_pTexture)
+    if (nullptr != m_pTexture)
     {
         SDL_DestroyTexture(m_pTexture);
         m_pTexture = nullptr;
@@ -38,27 +38,27 @@ void Sprite::Draw()
 
     // Define dest rect
     SDL_Rect destRect;
-    destRect.x = m_iXPos*TILE_SIZE;
-    destRect.y = m_iYPos*TILE_SIZE;
-    destRect.w = destRect.h = TILE_SIZE;    
+    destRect.x = m_iXPos;
+    destRect.y = m_iYPos;
+    destRect.w = destRect.h = TILE_SIZE;
 
-    SDL_RenderCopy(Game::m_pRenderer, m_pTexture, &srcRect, &destRect);
+    SDL_RenderCopyEx(Game::m_pRenderer, m_pTexture, &srcRect, &destRect, m_dAngle, nullptr, SDL_FLIP_NONE);
 }
 
-SDL_Texture* Sprite::LoadTexture(const char* fileName)
+SDL_Texture *Sprite::LoadTexture(const char *fileName)
 {
-    SDL_Surface* tempSurface = IMG_Load(fileName);
-    SDL_Texture* tex = SDL_CreateTextureFromSurface(Game::m_pRenderer, tempSurface);
+    SDL_Surface *tempSurface = IMG_Load(fileName);
+    SDL_Texture *tex = SDL_CreateTextureFromSurface(Game::m_pRenderer, tempSurface);
     SDL_FreeSurface(tempSurface);
-    return tex;    
+    return tex;
 }
 
-SDL_Texture* Sprite::Get_Image() const
+SDL_Texture *Sprite::Get_Image() const
 {
     return m_pTexture;
 }
 
 bool Sprite::operator==(const Sprite &other) const
 {
-    return(m_pTexture == other.Get_Image());
+    return (m_pTexture == other.Get_Image());
 }
