@@ -5,7 +5,8 @@
 #include "tile.h"
 #include "egg.h"
 #include "spritegroup.h"
-#include <fstream>
+#include <cstdlib>
+#include <ctime>
 
 SDL_Renderer *Game::m_pRenderer = nullptr;
 SDL_Event Game::m_Event;
@@ -51,6 +52,9 @@ Game::Game()
 
         // Set initial running flag
         m_bRunning = true;
+
+        // Seed random number generator
+        srand((unsigned)time(0)); 
     }
 }
 
@@ -224,30 +228,78 @@ bool Game::IsRunning()
 
 void Game::LoadMap()
 {
-    const char* path = "/home/terry/repos/drd2/map/map.map";
-    char c;
-    std::fstream mapFile;
-    mapFile.open(path);
-
-    int iTile = 0;
-
+    // Initialize tilemap
     for(int row = 0; row < MAP_HEIGHT; row++)
     {
         for(int column = 0; column < MAP_WIDTH; column++)
         {
-            mapFile.get(c);
-            iTile = atoi(&c);
+            tilemap[row][column] = 1; 
+        }
+    }  
 
-            //map[row][column] = iTile;   
+    // Generate tunnels
+    for(int tunn = 0; tunn < NUM_TUNNELS; tunn++)
+    {
+        // Compute random x and y starting points
+        int iXPos = 2*(rand()%(MAP_HEIGHT/2)); 
+        int iYPos = 2*(rand()%(MAP_WIDTH/2));
+        int iDir = (rand()%HEADS_OR_TAILS);
+        //std::cout << iXPos << "," << iYPos << "," << iDir << std::endl;
+
+        // Determine which direction to draw the tunnel
+        if(DIR_HORIZONTAL == iDir)
+        {
+            // Create horizontal tunnel
+            int row = iXPos;        
+            if(iYPos > (MAP_WIDTH)/2)
+            {
+                for(int column = 0; column < iYPos; column++)
+                {
+                    tilemap[row][column] = 0;
+                }
+            }
+            else
+            {
+                for(int column = iYPos; column < MAP_WIDTH; column++)
+                {
+                    tilemap[row][column] = 0;
+                }
+            }
+        }
+        else // DIR_VERTICAL == iDir
+        {
+            // Create vertical tunnel
+            int column = iYPos;
+            if(iXPos > (MAP_HEIGHT)/2)
+            {
+                for(int row = 0; row < iXPos; row++)
+                {
+                    tilemap[row][column] = 0;
+                }
+            }
+            else
+            {
+                for(int row = iXPos; row < MAP_HEIGHT; row++)
+                {
+                    tilemap[row][column] = 0;
+                }
+            }
+        }
+    }
+
+    // Setup tiles
+    for(int row = 0; row < MAP_HEIGHT; row++)
+    {
+        for(int column = 0; column < MAP_WIDTH; column++)
+        {
+            int iTile = tilemap[row][column];
             if(iTile)
             {
                 Tile *tile = new Tile("/home/terry/repos/drd2/img/rock_tile.png", column, row); 
                 tilegroup->Add(tile);
-            }         
-
-            mapFile.ignore();
+            }
         }
-    }
+    }    
 
-    mapFile.close();    
+
 }

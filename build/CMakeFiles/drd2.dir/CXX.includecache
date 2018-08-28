@@ -37,7 +37,9 @@ egg.h
 /home/terry/repos/drd2/egg.h
 spritegroup.h
 /home/terry/repos/drd2/spritegroup.h
-fstream
+cstdlib
+-
+ctime
 -
 
 /home/terry/repos/drd2/game.h

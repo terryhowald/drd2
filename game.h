@@ -17,7 +17,11 @@ enum
     UPDATE_INTERVAL = 1000/60,
     PLAYER_SPEED = 2,
     MAP_WIDTH = 25,
-    MAP_HEIGHT = 20
+    MAP_HEIGHT = 20,
+    NUM_TUNNELS = 6,
+    DIR_HORIZONTAL = 0,
+    DIR_VERTICAL = 1,
+    HEADS_OR_TAILS = 2
 };  
 
 class Game 
@@ -38,6 +42,7 @@ private:
     bool m_bPlaying;
     SDL_Window* m_pWindow;  
     SDL_GameController *m_pController;   
+    int tilemap[MAP_HEIGHT][MAP_WIDTH];
 
     void LoadMap();
     void Run();
