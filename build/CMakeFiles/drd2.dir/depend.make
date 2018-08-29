@@ -21,21 +21,27 @@ CMakeFiles/drd2.dir/game.cpp.o: ../tile.h
 
 CMakeFiles/drd2.dir/main.cpp.o: ../game.h
 CMakeFiles/drd2.dir/main.cpp.o: ../main.cpp
+CMakeFiles/drd2.dir/main.cpp.o: ../sprite.h
+CMakeFiles/drd2.dir/main.cpp.o: ../spritegroup.h
 
 CMakeFiles/drd2.dir/player.cpp.o: ../game.h
 CMakeFiles/drd2.dir/player.cpp.o: ../player.cpp
 CMakeFiles/drd2.dir/player.cpp.o: ../player.h
 CMakeFiles/drd2.dir/player.cpp.o: ../sprite.h
+CMakeFiles/drd2.dir/player.cpp.o: ../spritegroup.h
 
 CMakeFiles/drd2.dir/sprite.cpp.o: ../game.h
 CMakeFiles/drd2.dir/sprite.cpp.o: ../sprite.cpp
 CMakeFiles/drd2.dir/sprite.cpp.o: ../sprite.h
+CMakeFiles/drd2.dir/sprite.cpp.o: ../spritegroup.h
 
 CMakeFiles/drd2.dir/spritegroup.cpp.o: ../sprite.h
 CMakeFiles/drd2.dir/spritegroup.cpp.o: ../spritegroup.cpp
 CMakeFiles/drd2.dir/spritegroup.cpp.o: ../spritegroup.h
 
 CMakeFiles/drd2.dir/summary.cpp.o: ../game.h
+CMakeFiles/drd2.dir/summary.cpp.o: ../sprite.h
+CMakeFiles/drd2.dir/summary.cpp.o: ../spritegroup.h
 CMakeFiles/drd2.dir/summary.cpp.o: ../summary.cpp
 CMakeFiles/drd2.dir/summary.cpp.o: ../summary.h
 

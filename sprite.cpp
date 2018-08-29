@@ -62,3 +62,13 @@ bool Sprite::operator==(const Sprite &other) const
 {
     return (m_pTexture == other.Get_Image());
 }
+
+SDL_Rect Sprite::GetRect()
+{
+    SDL_Rect rect;
+    rect.x = m_iXPos;
+    rect.y = m_iYPos;
+    rect.w = rect.h = TILE_SIZE;
+
+    return rect;
+}

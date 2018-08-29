@@ -15,7 +15,9 @@ public:
 
 private:
     int m_iXSpeed;
+    int m_iHorizontal;
     int m_iYSpeed;
+    int m_iVertical;
 };
 
 #endif // PLAYER_H

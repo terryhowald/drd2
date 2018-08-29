@@ -202,7 +202,11 @@ void Game::Events()
 
 void Game::Update()
 {
+    // Update sprites
     player->Update();
+
+    // Check for collisions
+    SpriteCollide(player, tilegroup, true);
 }
 
 void Game::Draw()
@@ -302,4 +306,41 @@ void Game::LoadMap()
     }    
 
 
+}
+
+void Game::SpriteCollide(Sprite *pSprite, SpriteGroup *pSpriteGroup, bool bRemove)
+{
+    // Check for valid pointers
+    if((nullptr == pSprite) || (nullptr == pSpriteGroup))
+    {
+        std::cerr << "Invalid pointers" << std::endl;
+        return;
+    }
+
+    // Get vector from sprite group
+    std::vector <Sprite*> sprites = pSpriteGroup->Get_Sprites();
+
+    // Loop through sprites and check for collision
+    for(int i = 0; i < sprites.size(); i++)
+    {
+        // Get sprite coordinates
+        SDL_Rect recA = sprites[i]->GetRect();
+        SDL_Rect recB = pSprite->GetRect();
+
+        // Check for collision
+        if (
+            recA.x + recA.w >= recB.x &&
+            recB.x + recB.w >= recA.x &&
+            recA.y + recA.h >= recB.y &&
+            recB.y + recB.h >= recA.y
+            )
+        {
+            // Check to remove
+            if(bRemove)
+            {
+                pSpriteGroup->Remove(*sprites[i]);
+            }
+        }        
+        
+    }
 }

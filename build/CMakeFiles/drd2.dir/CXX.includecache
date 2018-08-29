@@ -51,6 +51,8 @@ SDL2/SDL_image.h
 -
 SDL2/SDL_mixer.h
 -
+spritegroup.h
+/home/terry/repos/drd2/spritegroup.h
 
 /home/terry/repos/drd2/main.cpp
 game.h

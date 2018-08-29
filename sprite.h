@@ -13,6 +13,7 @@ public:
     void Draw();
     SDL_Texture* Get_Image() const;  
     bool operator==(const Sprite &other) const; 
+    SDL_Rect GetRect();
 
 protected:
     SDL_Texture* m_pTexture;

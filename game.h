@@ -5,6 +5,7 @@
 #include <SDL2/SDL.h> 
 #include <SDL2/SDL_image.h>
 #include <SDL2/SDL_mixer.h>
+#include "spritegroup.h"
 
 enum 
 {
@@ -50,7 +51,8 @@ private:
     void Run();
     void Events();
     void Update();
-    void Draw();         
+    void Draw();    
+    void SpriteCollide(Sprite *pSprite, SpriteGroup *pSpritegroup, bool bRemove);     
 };
 
 
