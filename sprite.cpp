@@ -4,15 +4,17 @@
 #include "game.h"
 
 Sprite::Sprite(const char *fileName, int xpos, int ypos) : 
-    m_pTexture(nullptr), m_iXPos(xpos), m_iYPos(ypos), m_dAngle(0.0)
+    m_pTexture(nullptr), m_dAngle(0.0)
 {
     if (nullptr != fileName)
     {
         m_pTexture = LoadTexture(fileName);
     }
 
-    m_Rect.x = m_Rect.y = 0;
-    m_Rect.w = m_Rect.h = 32;
+    m_Rect.x = xpos;
+    m_Rect.y = ypos;
+    m_Rect.w = m_Rect.h = TILE_SIZE;
+
 }
 
 Sprite::~Sprite()
@@ -25,7 +27,7 @@ Sprite::~Sprite()
 }
 
 void Sprite::Update()
-{
+{  
     // Override
 }
 
@@ -33,13 +35,14 @@ void Sprite::Draw()
 {
     // Define src rect
     SDL_Rect srcRect;
-    srcRect.x = srcRect.y = 0;
+    srcRect.x = 0;
+    srcRect.y = 0;
     srcRect.w = srcRect.h = TILE_SIZE;
 
     // Define dest rect
     SDL_Rect destRect;
-    destRect.x = m_iXPos;
-    destRect.y = m_iYPos;
+    destRect.x = m_Rect.x;
+    destRect.y = m_Rect.y;
     destRect.w = destRect.h = TILE_SIZE;
 
     SDL_RenderCopyEx(Game::m_pRenderer, m_pTexture, &srcRect, &destRect, m_dAngle, nullptr, SDL_FLIP_NONE);
@@ -66,8 +69,8 @@ bool Sprite::operator==(const Sprite &other) const
 SDL_Rect Sprite::GetRect()
 {
     SDL_Rect rect;
-    rect.x = m_iXPos;
-    rect.y = m_iYPos;
+    rect.x = m_Rect.x;
+    rect.y = m_Rect.y;
     rect.w = rect.h = TILE_SIZE;
 
     return rect;

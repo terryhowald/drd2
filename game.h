@@ -52,7 +52,7 @@ private:
     void Events();
     void Update();
     void Draw();    
-    void SpriteCollide(Sprite *pSprite, SpriteGroup *pSpritegroup, bool bRemove);     
+    bool SpriteCollide(Sprite *pSprite, SpriteGroup *pSpritegroup, bool bRemove);     
 };
 
 

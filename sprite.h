@@ -13,18 +13,17 @@ public:
     void Draw();
     SDL_Texture* Get_Image() const;  
     bool operator==(const Sprite &other) const; 
-    SDL_Rect GetRect();
+    SDL_Rect GetRect();   
+   
 
 protected:
     SDL_Texture* m_pTexture;
     SDL_Rect m_Rect;
-    int m_iXPos;
-    int m_iYPos;
-    double m_dAngle;
+    double m_dAngle;   
 
 private:
     SDL_Texture* LoadTexture(const char* fileName);
-    void Draw(SDL_Texture* tex, SDL_Rect src, SDL_Rect dest);
+    void Draw(SDL_Texture* tex, SDL_Rect src, SDL_Rect dest); 
 };
 
 #endif // SPRITE_H

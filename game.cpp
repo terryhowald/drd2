@@ -135,7 +135,7 @@ void Game::New()
     LoadMap();
 
     // Create player
-    player = new Player("/home/terry/repos/drd2/img/horta.png", 5*TILE_SIZE, 5*TILE_SIZE);
+    player = new Player("/home/terry/repos/drd2/img/horta_anims.png", 5*TILE_SIZE, 5*TILE_SIZE);
  
     // Let 'er rip!
     Run();
@@ -206,7 +206,11 @@ void Game::Update()
     player->Update();
 
     // Check for collisions
-    SpriteCollide(player, tilegroup, true);
+    if(SpriteCollide(player, tilegroup, true))
+    {
+        // Player his something, so slow down
+        player->Set_Speed(1);
+    }
 }
 
 void Game::Draw()
@@ -308,13 +312,15 @@ void Game::LoadMap()
 
 }
 
-void Game::SpriteCollide(Sprite *pSprite, SpriteGroup *pSpriteGroup, bool bRemove)
+bool Game::SpriteCollide(Sprite *pSprite, SpriteGroup *pSpriteGroup, bool bRemove)
 {
+    bool bCollide = false;
+
     // Check for valid pointers
     if((nullptr == pSprite) || (nullptr == pSpriteGroup))
     {
         std::cerr << "Invalid pointers" << std::endl;
-        return;
+        return(bCollide);
     }
 
     // Get vector from sprite group
@@ -329,10 +335,10 @@ void Game::SpriteCollide(Sprite *pSprite, SpriteGroup *pSpriteGroup, bool bRemov
 
         // Check for collision
         if (
-            recA.x + recA.w >= recB.x &&
-            recB.x + recB.w >= recA.x &&
-            recA.y + recA.h >= recB.y &&
-            recB.y + recB.h >= recA.y
+            recA.x + recA.w > recB.x &&
+            recB.x + recB.w > recA.x &&
+            recA.y + recA.h > recB.y &&
+            recB.y + recB.h > recA.y
             )
         {
             // Check to remove
@@ -340,7 +346,12 @@ void Game::SpriteCollide(Sprite *pSprite, SpriteGroup *pSpriteGroup, bool bRemov
             {
                 pSpriteGroup->Remove(*sprites[i]);
             }
+
+            // Hit something, so set collide flag
+            bCollide = true;
         }        
         
     }
+
+    return(bCollide);
 }

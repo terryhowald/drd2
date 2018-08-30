@@ -38,7 +38,10 @@
         "tuple": "cpp",
         "typeinfo": "cpp",
         "utility": "cpp",
-        "algorithm": "cpp"
+        "algorithm": "cpp",
+        "bitset": "cpp",
+        "deque": "cpp",
+        "memory": "cpp"
     },
     "C_Cpp.configurationWarnings": "Disabled"
 }
