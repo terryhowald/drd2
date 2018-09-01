@@ -9,7 +9,7 @@ public:
     Tile(const char* fileName, int xpos, int ypos);
     ~Tile();
 
-    void Update();
+    void Update() override;
     void Move();
 
 private:

@@ -9,7 +9,7 @@ public:
     Player(const char* fileName, int xpos, int ypos);
     ~Player();
 
-    void Update();
+    void Update() override;
     void Move();
     void Set_Angle(double dAngle);
     void Set_Speed(int iSpeed);

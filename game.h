@@ -45,14 +45,16 @@ private:
     bool m_bPlaying;
     SDL_Window* m_pWindow;  
     SDL_GameController *m_pController;   
-    int tilemap[MAP_HEIGHT][MAP_WIDTH];
+    int tilemap[MAP_WIDTH][MAP_HEIGHT];
+    int m_iEnemyNum;
 
     void LoadMap();
     void Run();
     void Events();
     void Update();
     void Draw();    
-    bool SpriteCollide(Sprite *pSprite, SpriteGroup *pSpritegroup, bool bRemove);     
+    bool SpriteCollide(Sprite *pSprite, SpriteGroup *pSpritegroup, bool bRemove); 
+    void LoadEggs();    
 };
 
 

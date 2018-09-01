@@ -7,7 +7,9 @@ CMakeFiles/drd2.dir/egg.cpp.o: ../sprite.h
 
 CMakeFiles/drd2.dir/enemy.cpp.o: ../enemy.cpp
 CMakeFiles/drd2.dir/enemy.cpp.o: ../enemy.h
+CMakeFiles/drd2.dir/enemy.cpp.o: ../game.h
 CMakeFiles/drd2.dir/enemy.cpp.o: ../sprite.h
+CMakeFiles/drd2.dir/enemy.cpp.o: ../spritegroup.h
 
 CMakeFiles/drd2.dir/game.cpp.o: ../egg.h
 CMakeFiles/drd2.dir/game.cpp.o: ../enemy.h

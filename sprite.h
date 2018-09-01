@@ -9,7 +9,7 @@ public:
     Sprite(const char* fileName, int xpos, int ypos);
     ~Sprite();
 
-    void Update();
+    virtual void Update();
     void Draw();
     SDL_Texture* Get_Image() const;  
     bool operator==(const Sprite &other) const; 

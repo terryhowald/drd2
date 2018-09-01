@@ -9,7 +9,7 @@ public:
     Egg(const char* fileName, int xpos, int ypos);
     ~Egg();
 
-    void Update();
+    void Update() override;
     void Move();
 
 private:

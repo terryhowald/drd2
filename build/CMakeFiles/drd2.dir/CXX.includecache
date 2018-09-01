@@ -17,6 +17,10 @@ sprite.h
 /home/terry/repos/drd2/enemy.cpp
 enemy.h
 /home/terry/repos/drd2/enemy.h
+game.h
+/home/terry/repos/drd2/game.h
+cstdlib
+-
 
 /home/terry/repos/drd2/enemy.h
 sprite.h
