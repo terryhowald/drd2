@@ -182,13 +182,13 @@ void Game::New()
         int ypos = m_pEnemyInit[iTunn].ypos;
         int dir = m_pEnemyInit[iTunn].dir;
         if(dir == DIR_LEFT)
-            xpos -= (50 + std::rand() % 100);
+            xpos -= (50 + std::rand() % DISPLAY_WIDTH/2);
         if(dir == DIR_RIGHT)
-            xpos += (50 + std::rand() % 100);
+            xpos += (50 + std::rand() % DISPLAY_WIDTH/2);
         if(dir == DIR_UP)
-            ypos -= (50 + std::rand() % 100);
+            ypos -= (50 + std::rand() % DISPLAY_HEIGHT/2);
         if(dir == DIR_DOWN)
-            ypos += (50 + std::rand() % 100);            
+            ypos += (50 + std::rand() % DISPLAY_HEIGHT/2);            
 
         // Create enemy
         enemy = new Enemy("/home/terry/repos/drd2/img/redshirt.png", xpos, ypos, dir);

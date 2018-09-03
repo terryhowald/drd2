@@ -77,9 +77,7 @@ void Enemy::Update()
             m_iDir = DIR_UP;    
             m_iVertical = -1;        
         } 
-    }  
-
-    
+    } 
 }
 
 void Enemy::Move()
