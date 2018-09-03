@@ -20,6 +20,7 @@ protected:
     SDL_Texture* m_pTexture;
     SDL_Rect m_Rect;
     double m_dAngle;   
+    SDL_RendererFlip m_Flip;
 
 private:
     SDL_Texture* LoadTexture(const char* fileName);

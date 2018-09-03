@@ -21,7 +21,7 @@ SpriteGroup *pEnemyGroup = nullptr;
 SpriteGroup *pEggGroup = nullptr;
 
 Game::Game()
-    : m_bPlaying(false), m_pWindow(NULL), m_pController(NULL), m_iEnemyNum(0)
+    : m_bPlaying(false), m_pWindow(NULL), m_pController(NULL), m_iEnemyNum(0), m_pEnemyInit(nullptr)
 {
     // Initialize SDL2 library
     if (0 == SDL_Init(SDL_INIT_EVERYTHING))
@@ -55,14 +55,20 @@ Game::Game()
         // Set initial running flag
         m_bRunning = true;
 
-        // Seed random number generator
-        srand((unsigned)time(0));
+        // Init enemy init array
+        m_pEnemyInit = new EnemyInit[NUM_TUNNELS];
 
     }
 }
 
 Game::~Game()
 {
+    if(nullptr != m_pEnemyInit)
+    {
+        delete [] m_pEnemyInit;
+        m_pEnemyInit = nullptr;
+    }
+
     // Destory egggroup
     if (nullptr != pEggGroup)
     {
@@ -141,6 +147,9 @@ void Game::ShowScreen(int iScreen)
 
 void Game::New()
 {
+    // Seed random number generator
+    std::srand(std::time(0));
+
     // Setup background sound
     Mix_Music *music = Mix_LoadMUS("/home/terry/repos/drd2/snd/tos_planet_3.wav");
     if (NULL != music)
@@ -165,16 +174,24 @@ void Game::New()
     m_iEnemyNum++;
     for (int i = 0; i < m_iEnemyNum; i++)
     {
-        // Search for tunnel to place enemy
-        do
-        {
-            iRandX = (rand() % MAP_WIDTH);
-            iRandY = (rand() % MAP_HEIGHT); 
-        } 
-        while(tilemap[iRandX][iRandY] == 1);  
+        // Get tunnel to place enemy
+        int iTunn = i % NUM_TUNNELS;
 
-        // Tunnel found, so create enemy    
-        enemy = new Enemy("/home/terry/repos/drd2/img/redshirt.png", iRandX*TILE_SIZE, iRandY*TILE_SIZE);
+        // Setup enemy  
+        int xpos = m_pEnemyInit[iTunn].xpos;
+        int ypos = m_pEnemyInit[iTunn].ypos;
+        int dir = m_pEnemyInit[iTunn].dir;
+        if(dir == DIR_LEFT)
+            xpos -= (50 + std::rand() % 100);
+        if(dir == DIR_RIGHT)
+            xpos += (50 + std::rand() % 100);
+        if(dir == DIR_UP)
+            ypos -= (50 + std::rand() % 100);
+        if(dir == DIR_DOWN)
+            ypos += (50 + std::rand() % 100);            
+
+        // Create enemy
+        enemy = new Enemy("/home/terry/repos/drd2/img/redshirt.png", xpos, ypos, dir);
         pEnemyGroup->Add(enemy);
     }
 
@@ -252,6 +269,9 @@ void Game::Update()
     // Update player
     player->Update();
 
+    // Update enemy(s)
+    pEnemyGroup->Update();    
+
     // Check for player/tile collisions
     if (SpriteCollide(player, pTileGroup, true))
     {
@@ -268,47 +288,32 @@ void Game::Update()
     // Check for player/enemy collisions
     if (SpriteCollide(player, pEnemyGroup, true))
     {
-        std::cout << "Player collided with enemy" << std::endl;
+        // Make enemy dying sound
+        ;
     }
 
-    // Update enemy(s)
-    pEnemyGroup->Update();
+    // Get vector of sprites to loop through for collisions
+    std::vector<Sprite *> sprites = pEnemyGroup->Get_Sprites();
 
-    // Loop through sprites and check for collisions
-    std::vector<Sprite *> sprites = pEnemyGroup->Get_Sprites();    
+    // Check for enemy/tile collisions
     for (int i = 0; i < sprites.size(); i++)
     {   
-        // Check for enemy/tile collisions        
-        if(SpriteCollide(sprites[i], pTileGroup, false))
+        if (SpriteCollide(sprites[i], pTileGroup, false))
         {
-            static_cast<Enemy*>(sprites[i])->Move();
-        }
+            //std::cout << "Enemy collided with tile" << std::endl;
+            static_cast<Enemy*>(sprites[i])->Maneuver();
+        }  
+    }     
 
-        // Check for enemy/egg collisions
+    // Check for enemy/egg collisions
+    for (int i = 0; i < sprites.size(); i++)
+    {   
         if (SpriteCollide(sprites[i], pEggGroup, true))
         {
-            //std::cout << "Enemy collided with egg" << std::endl;
+            // Make egg squashing sound
             ;
-        }   
-
-        /*
-
-        // Peek at tilemap
-        SDL_Rect tRect = sprites[i]->GetRect();
-        int iRow = tRect.x/TILE_SIZE;
-        int iCol = tRect.y/TILE_SIZE;
-
-        if(DIR_HORIZONTAL == static_cast<Enemy*>(sprites[i])->GetDir())
-        {
-            if(!tilemap[iRow][iCol+1])
-                std::cout << tilemap[iRow][iCol+1] << std::endl;
-            //std::cout << iRow << "," << iCol << "," << tilemap[iRow][iCol] << " | " 
-            //          << iRow << "," << iCol+1 << "," << tilemap[iRow][iCol+1] << std::endl;
-
-        }
-        */
-
-    }     
+        }  
+    }            
 }
 
 void Game::Draw()
@@ -353,9 +358,9 @@ void Game::LoadMap()
     for (int tunn = 0; tunn < NUM_TUNNELS; tunn++)
     {
         // Compute random x and y starting points
-        int iXPos = 2 * (rand() % (MAP_WIDTH / 2));
-        int iYPos = 2 * (rand() % (MAP_HEIGHT / 2));
-        int iDir = (rand() % HEADS_OR_TAILS);
+        int iXPos = 2 * (std::rand() % (MAP_WIDTH / 2));
+        int iYPos = 2 * (std::rand() % (MAP_HEIGHT / 2));
+        int iDir = (std::rand() % HEADS_OR_TAILS);
         //std::cout << iXPos << "," << iYPos << "," << iDir << std::endl;
 
         // Determine which direction to draw the tunnel
@@ -369,6 +374,9 @@ void Game::LoadMap()
                 {
                     tilemap[row][column] = 0;
                 }
+                m_pEnemyInit[tunn].xpos = iXPos*TILE_SIZE;
+                m_pEnemyInit[tunn].ypos = iYPos*TILE_SIZE;
+                m_pEnemyInit[tunn].dir = DIR_UP;
             }
             else
             {
@@ -376,6 +384,9 @@ void Game::LoadMap()
                 {
                     tilemap[row][column] = 0;
                 }
+                m_pEnemyInit[tunn].xpos = iXPos*TILE_SIZE;
+                m_pEnemyInit[tunn].ypos = iYPos*TILE_SIZE;
+                m_pEnemyInit[tunn].dir = DIR_DOWN;             
             }
         }
         else // DIR_HORIZONTAL == iDir
@@ -387,14 +398,20 @@ void Game::LoadMap()
                 for (int row = 0; row < iXPos; row++)
                 {
                     tilemap[row][column] = 0;
-                }
+                }              
+                m_pEnemyInit[tunn].xpos = iXPos*TILE_SIZE;
+                m_pEnemyInit[tunn].ypos = iYPos*TILE_SIZE;
+                m_pEnemyInit[tunn].dir = DIR_LEFT;             
             }
             else
             {
                 for (int row = iXPos; row < MAP_WIDTH; row++)
                 {
                     tilemap[row][column] = 0;
-                }
+                }               
+                m_pEnemyInit[tunn].xpos = iXPos*TILE_SIZE;
+                m_pEnemyInit[tunn].ypos = iYPos*TILE_SIZE;
+                m_pEnemyInit[tunn].dir = DIR_RIGHT;              
             }
         }
     }
@@ -453,11 +470,7 @@ bool Game::SpriteCollide(Sprite *pSprite, SpriteGroup *pSpriteGroup, bool bRemov
         SDL_Rect recB = pSprite->GetRect();
 
         // Check for collision
-        if (
-            recA.x + recA.w > recB.x &&
-            recB.x + recB.w > recA.x &&
-            recA.y + recA.h > recB.y &&
-            recB.y + recB.h > recA.y)
+       if(SDL_TRUE == SDL_HasIntersection(&recA, &recB))
         {
             // Check to remove
             if (bRemove)

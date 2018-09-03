@@ -4,7 +4,7 @@
 #include "game.h"
 
 Sprite::Sprite(const char *fileName, int xpos, int ypos) : 
-    m_pTexture(nullptr), m_dAngle(0.0)
+    m_pTexture(nullptr), m_dAngle(0.0), m_Flip(SDL_FLIP_NONE)
 {
     if (nullptr != fileName)
     {
@@ -45,7 +45,7 @@ void Sprite::Draw()
     destRect.y = m_Rect.y;
     destRect.w = destRect.h = TILE_SIZE;
 
-    SDL_RenderCopyEx(Game::m_pRenderer, m_pTexture, &srcRect, &destRect, m_dAngle, nullptr, SDL_FLIP_NONE);
+    SDL_RenderCopyEx(Game::m_pRenderer, m_pTexture, &srcRect, &destRect, m_dAngle, nullptr, m_Flip);
 }
 
 SDL_Texture *Sprite::LoadTexture(const char *fileName)

@@ -24,7 +24,11 @@ enum
     DIR_VERTICAL = 1,
     HEADS_OR_TAILS = 2,
     TUNNEL_SPEED = 3,
-    ROCK_SPEED = 1
+    ROCK_SPEED = 1,
+    DIR_LEFT  = 0, 
+    DIR_RIGHT = 1,
+    DIR_UP = 2,
+    DIR_DOWN = 3    
 };  
 
 class Game 
@@ -47,6 +51,15 @@ private:
     SDL_GameController *m_pController;   
     int tilemap[MAP_WIDTH][MAP_HEIGHT];
     int m_iEnemyNum;
+
+    struct EnemyInit
+    {
+        int xpos;
+        int ypos;
+        int dir;
+    };
+
+    EnemyInit* m_pEnemyInit;
 
     void LoadMap();
     void Run();
