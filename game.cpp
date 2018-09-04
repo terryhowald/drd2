@@ -290,6 +290,12 @@ void Game::Update()
     {
         // Make enemy dying sound
         ;
+
+        // Check enemy count
+        if(pEnemyGroup->Size() == 0)
+        {
+            m_bPlaying = false;
+        }
     }
 
     // Get vector of sprites to loop through for collisions
@@ -312,6 +318,13 @@ void Game::Update()
         {
             // Make egg squashing sound
             ;
+
+            // Check egg count
+            if(pEggGroup->Size() == 0)
+            {
+                // Game over
+                m_bPlaying = false;
+            }
         }  
     }  
 
