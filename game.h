@@ -28,7 +28,8 @@ enum
     DIR_LEFT  = 0, 
     DIR_RIGHT = 1,
     DIR_UP = 2,
-    DIR_DOWN = 3    
+    DIR_DOWN = 3,
+    TURN_ODDS = 4    
 };  
 
 class Game 
@@ -67,7 +68,8 @@ private:
     void Update();
     void Draw();    
     bool SpriteCollide(Sprite *pSprite, SpriteGroup *pSpritegroup, bool bRemove); 
-    void LoadEggs();    
+    void LoadEggs();
+    bool TurnCheck(Sprite *pSprite);    
 };
 
 

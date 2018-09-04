@@ -300,7 +300,7 @@ void Game::Update()
     {   
         if (SpriteCollide(sprites[i], pTileGroup, false))
         {
-            //std::cout << "Enemy collided with tile" << std::endl;
+            // Ran into rock, so turn back
             static_cast<Enemy*>(sprites[i])->Maneuver();
         }  
     }     
@@ -313,7 +313,17 @@ void Game::Update()
             // Make egg squashing sound
             ;
         }  
-    }            
+    }  
+
+    // See if enemy can turn
+    for (int i = 0; i < sprites.size(); i++)
+    {   
+        if (TurnCheck(sprites[i]))
+        {
+            // Make a sound when redshirt turns
+            ;
+        }  
+    }                
 }
 
 void Game::Draw()
@@ -484,4 +494,85 @@ bool Game::SpriteCollide(Sprite *pSprite, SpriteGroup *pSpriteGroup, bool bRemov
     }
 
     return (bCollide);
+}
+
+bool Game::TurnCheck(Sprite *pSprite)
+{
+    int x_pos = pSprite->GetRect().x;
+    int y_pos = pSprite->GetRect().y;
+    int x_index = (int)round((double)x_pos/(double)TILE_SIZE);
+    int y_index = (int)round((double)y_pos/(double)TILE_SIZE);
+    int iDir = static_cast<Enemy*>(pSprite)->GetDir();
+    int iDice = 0;
+
+    if (iDir == DIR_UP || iDir == DIR_DOWN)
+    {
+        // Look to make right or left turns
+        if(x_index > 0 && x_index < MAP_WIDTH)
+        {
+            // Look right
+            if(tilemap[x_index+1][y_index] == 0)
+            {
+                if(y_pos == y_index*TILE_SIZE) 
+                {  
+                    // Roll dice to see if we turn right
+                    if(!(rand()%TURN_ODDS))
+                    {          
+                        static_cast<Enemy*>(pSprite)->SetDir(DIR_RIGHT);
+                        return(true);
+                    }
+                }
+            }
+
+            // Look left
+            if(tilemap[x_index-1][y_index] == 0)
+            {
+                if(y_pos == y_index*TILE_SIZE)
+                {
+                    // Roll dice to see if we turn left
+                    if(!(rand()%TURN_ODDS))
+                    {                       
+                        static_cast<Enemy*>(pSprite)->SetDir(DIR_LEFT);
+                        return(true);
+                    }
+                }
+            }
+        }       
+    }
+    else // iDir is horizontal
+    {
+        // Look to make up or down turns
+        if(y_index > 0 && y_index < MAP_HEIGHT)
+        {
+            // Look up
+            if(tilemap[x_index][y_index-1] == 0)
+            {
+                if(x_pos == x_index*TILE_SIZE) 
+                {    
+                    // Roll dice to see if we turn up
+                    if(!(rand()%TURN_ODDS))
+                    {                                
+                        static_cast<Enemy*>(pSprite)->SetDir(DIR_UP);
+                        return(true);
+                    }
+                }
+            }
+
+            // Look down
+            if(tilemap[x_index][y_index+1] == 0)
+            {
+                if(x_pos == x_index*TILE_SIZE)
+                {
+                    // Roll dice to see if we turn down
+                    if(!(rand()%TURN_ODDS))
+                    {                      
+                        static_cast<Enemy*>(pSprite)->SetDir(DIR_DOWN);
+                        return(true);
+                    }
+                }
+            }
+        }         
+    }
+  
+    return(false);
 }

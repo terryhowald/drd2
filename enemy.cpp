@@ -137,6 +137,29 @@ int Enemy::GetDir()
 void Enemy::SetDir(int dir)
 {
     m_iDir = dir;
-    m_bDirChange = true;
+
+    switch(m_iDir)
+    {
+        case DIR_RIGHT:
+            m_iHorizontal = 1;
+            m_Flip = SDL_FLIP_HORIZONTAL;
+            break;
+        case DIR_LEFT:
+            m_iHorizontal = -1;
+            m_Flip = SDL_FLIP_NONE;            
+            break;   
+        case DIR_UP:
+            m_iVertical = -1;
+            break;
+        case DIR_DOWN:
+            m_iVertical = 1;
+            break;                     
+        default:
+            break;
+    }
+
+    // Adjust enemy position to align with rock tiles
+    m_Rect.x = ((int)round((double)m_Rect.x/(double)TILE_SIZE))*TILE_SIZE;      
+    m_Rect.y = ((int)round((double)m_Rect.y/(double)TILE_SIZE))*TILE_SIZE;         
 }
 
