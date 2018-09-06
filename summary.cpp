@@ -54,7 +54,7 @@ void Summary::Show(int iScreen)
             switch(Game::m_Event.type) 
             {
                 case SDL_MOUSEBUTTONDOWN:
-                case SDL_KEYDOWN:
+                //case SDL_KEYDOWN:
                     bQuit = true;
                     break;
                 case SDL_QUIT:

@@ -21,7 +21,8 @@ SpriteGroup *pEnemyGroup = nullptr;
 SpriteGroup *pEggGroup = nullptr;
 
 Game::Game()
-    : m_bPlaying(false), m_pWindow(NULL), m_pController(NULL), m_iEnemyNum(0), m_pEnemyInit(nullptr)
+    : m_bPlaying(false), m_pWindow(NULL), m_pController(NULL), m_iEnemyNum(0),
+      m_pEnemyInit(nullptr), m_bFiring(false), m_bCeaseFire(false), m_bFirePhaser(false)
 {
     // Initialize SDL2 library
     if (0 == SDL_Init(SDL_INIT_EVERYTHING))
@@ -58,14 +59,16 @@ Game::Game()
         // Init enemy init array
         m_pEnemyInit = new EnemyInit[NUM_TUNNELS];
 
+        // Load wave files
+        LoadWavs();
     }
 }
 
 Game::~Game()
 {
-    if(nullptr != m_pEnemyInit)
+    if (nullptr != m_pEnemyInit)
     {
-        delete [] m_pEnemyInit;
+        delete[] m_pEnemyInit;
         m_pEnemyInit = nullptr;
     }
 
@@ -177,18 +180,18 @@ void Game::New()
         // Get tunnel to place enemy
         int iTunn = i % NUM_TUNNELS;
 
-        // Setup enemy  
+        // Setup enemy
         int xpos = m_pEnemyInit[iTunn].xpos;
         int ypos = m_pEnemyInit[iTunn].ypos;
         int dir = m_pEnemyInit[iTunn].dir;
-        if(dir == DIR_LEFT)
-            xpos -= (50 + std::rand() % DISPLAY_WIDTH/2);
-        if(dir == DIR_RIGHT)
-            xpos += (50 + std::rand() % DISPLAY_WIDTH/2);
-        if(dir == DIR_UP)
-            ypos -= (50 + std::rand() % DISPLAY_HEIGHT/2);
-        if(dir == DIR_DOWN)
-            ypos += (50 + std::rand() % DISPLAY_HEIGHT/2);            
+        if (dir == DIR_LEFT)
+            xpos -= (50 + std::rand() % DISPLAY_WIDTH / 2);
+        if (dir == DIR_RIGHT)
+            xpos += (50 + std::rand() % DISPLAY_WIDTH / 2);
+        if (dir == DIR_UP)
+            ypos -= (50 + std::rand() % DISPLAY_HEIGHT / 2);
+        if (dir == DIR_DOWN)
+            ypos += (50 + std::rand() % DISPLAY_HEIGHT / 2);
 
         // Create enemy
         enemy = new Enemy("/home/terry/repos/drd2/img/redshirt.png", xpos, ypos, dir);
@@ -270,7 +273,7 @@ void Game::Update()
     player->Update();
 
     // Update enemy(s)
-    pEnemyGroup->Update();    
+    pEnemyGroup->Update();
 
     // Check for player/tile collisions
     if (SpriteCollide(player, pTileGroup, true))
@@ -280,8 +283,8 @@ void Game::Update()
 
         // Zero out collision location in tilemap
         SDL_Rect tRect = player->GetRect();
-        int iRow = tRect.x/TILE_SIZE;
-        int iCol = tRect.y/TILE_SIZE;
+        int iRow = tRect.x / TILE_SIZE;
+        int iCol = tRect.y / TILE_SIZE;
         tilemap[iCol][iRow] = 0;
     }
 
@@ -289,12 +292,18 @@ void Game::Update()
     if (SpriteCollide(player, pEnemyGroup, true))
     {
         // Make enemy dying sound
-        ;
+        if(nullptr != m_pScreamWavs) 
+        {
+            int iScream = rand()%8;
+            Mix_PlayChannel(3, m_pScreamWavs[iScream], 0);
+            Mix_Volume(3, MIX_MAX_VOLUME/4);
+        }
 
         // Check enemy count
-        if(pEnemyGroup->Size() == 0)
+        if (pEnemyGroup->Size() == 0)
         {
             m_bPlaying = false;
+            Mix_HaltChannel(1);
         }
     }
 
@@ -303,40 +312,66 @@ void Game::Update()
 
     // Check for enemy/tile collisions
     for (int i = 0; i < sprites.size(); i++)
-    {   
+    {
         if (SpriteCollide(sprites[i], pTileGroup, false))
         {
             // Ran into rock, so turn back
-            static_cast<Enemy*>(sprites[i])->Maneuver();
-        }  
-    }     
+            static_cast<Enemy *>(sprites[i])->Maneuver();
+        }
+    }
 
     // Check for enemy/egg collisions
     for (int i = 0; i < sprites.size(); i++)
-    {   
+    {
         if (SpriteCollide(sprites[i], pEggGroup, true))
         {
             // Make egg squashing sound
-            ;
+            if(nullptr != m_pSquashWav) 
+            {
+                int iChannel = Mix_PlayChannel(2, m_pSquashWav, 0);
+                Mix_Volume(2, MIX_MAX_VOLUME/4);
+            }
 
             // Check egg count
-            if(pEggGroup->Size() == 0)
+            if (pEggGroup->Size() == 0)
             {
                 // Game over
                 m_bPlaying = false;
+                Mix_HaltChannel(1);
             }
-        }  
-    }  
+        }
+    }
 
     // See if enemy can turn
     for (int i = 0; i < sprites.size(); i++)
-    {   
+    {
         if (TurnCheck(sprites[i]))
         {
             // Make a sound when redshirt turns
             ;
-        }  
-    }                
+        }
+    }
+
+    // See if enemy can fire
+    m_bFirePhaser = false;    
+    for (int i = 0; i < sprites.size(); i++)
+    {
+        PhaserCheck(sprites[i]);
+
+        if(m_bFirePhaser)
+        {
+            // Make a sound when redshirt fires
+            if(nullptr != m_pPhaserWav) 
+            {
+                m_iPhaserCh = Mix_PlayChannel(1, m_pPhaserWav, -1);
+                Mix_Volume(m_iPhaserCh, MIX_MAX_VOLUME/4);
+            }     
+        }
+        else // Shut off phaser firing sound
+        {
+            Mix_HaltChannel(1);
+        }
+    }
 }
 
 void Game::Draw()
@@ -351,11 +386,19 @@ void Game::Draw()
     // Draw eggs
     pEggGroup->Draw();
 
+    // Draw phaser, if firing
+    if (m_bFirePhaser)
+    {
+        //std::cout << "Draw phaser fire" << std::endl;
+        SDL_SetRenderDrawColor(m_pRenderer, 255, 255, 255, SDL_ALPHA_OPAQUE);
+        SDL_RenderDrawLine(m_pRenderer, m_EnemyFire.e_xpos, m_EnemyFire.e_ypos, m_EnemyFire.p_xpos, m_EnemyFire.p_ypos);   
+    } 
+
     // Draw enemy(s);
     pEnemyGroup->Draw();    
 
     // Draw player
-    player->Draw();
+    player->Draw();    
 
     // Blit offscreen to display
     SDL_RenderPresent(m_pRenderer);
@@ -397,8 +440,8 @@ void Game::LoadMap()
                 {
                     tilemap[row][column] = 0;
                 }
-                m_pEnemyInit[tunn].xpos = iXPos*TILE_SIZE;
-                m_pEnemyInit[tunn].ypos = iYPos*TILE_SIZE;
+                m_pEnemyInit[tunn].xpos = iXPos * TILE_SIZE;
+                m_pEnemyInit[tunn].ypos = iYPos * TILE_SIZE;
                 m_pEnemyInit[tunn].dir = DIR_UP;
             }
             else
@@ -407,9 +450,9 @@ void Game::LoadMap()
                 {
                     tilemap[row][column] = 0;
                 }
-                m_pEnemyInit[tunn].xpos = iXPos*TILE_SIZE;
-                m_pEnemyInit[tunn].ypos = iYPos*TILE_SIZE;
-                m_pEnemyInit[tunn].dir = DIR_DOWN;             
+                m_pEnemyInit[tunn].xpos = iXPos * TILE_SIZE;
+                m_pEnemyInit[tunn].ypos = iYPos * TILE_SIZE;
+                m_pEnemyInit[tunn].dir = DIR_DOWN;
             }
         }
         else // DIR_HORIZONTAL == iDir
@@ -421,20 +464,20 @@ void Game::LoadMap()
                 for (int row = 0; row < iXPos; row++)
                 {
                     tilemap[row][column] = 0;
-                }              
-                m_pEnemyInit[tunn].xpos = iXPos*TILE_SIZE;
-                m_pEnemyInit[tunn].ypos = iYPos*TILE_SIZE;
-                m_pEnemyInit[tunn].dir = DIR_LEFT;             
+                }
+                m_pEnemyInit[tunn].xpos = iXPos * TILE_SIZE;
+                m_pEnemyInit[tunn].ypos = iYPos * TILE_SIZE;
+                m_pEnemyInit[tunn].dir = DIR_LEFT;
             }
             else
             {
                 for (int row = iXPos; row < MAP_WIDTH; row++)
                 {
                     tilemap[row][column] = 0;
-                }               
-                m_pEnemyInit[tunn].xpos = iXPos*TILE_SIZE;
-                m_pEnemyInit[tunn].ypos = iYPos*TILE_SIZE;
-                m_pEnemyInit[tunn].dir = DIR_RIGHT;              
+                }
+                m_pEnemyInit[tunn].xpos = iXPos * TILE_SIZE;
+                m_pEnemyInit[tunn].ypos = iYPos * TILE_SIZE;
+                m_pEnemyInit[tunn].dir = DIR_RIGHT;
             }
         }
     }
@@ -468,7 +511,7 @@ void Game::LoadEggs()
                 pEggGroup->Add(pEgg);
             }
         }
-    }    
+    }
 }
 
 bool Game::SpriteCollide(Sprite *pSprite, SpriteGroup *pSpriteGroup, bool bRemove)
@@ -493,7 +536,7 @@ bool Game::SpriteCollide(Sprite *pSprite, SpriteGroup *pSpriteGroup, bool bRemov
         SDL_Rect recB = pSprite->GetRect();
 
         // Check for collision
-       if(SDL_TRUE == SDL_HasIntersection(&recA, &recB))
+        if (SDL_TRUE == SDL_HasIntersection(&recA, &recB))
         {
             // Check to remove
             if (bRemove)
@@ -513,79 +556,179 @@ bool Game::TurnCheck(Sprite *pSprite)
 {
     int x_pos = pSprite->GetRect().x;
     int y_pos = pSprite->GetRect().y;
-    int x_index = (int)round((double)x_pos/(double)TILE_SIZE);
-    int y_index = (int)round((double)y_pos/(double)TILE_SIZE);
-    int iDir = static_cast<Enemy*>(pSprite)->GetDir();
+    int x_index = (int)round((double)x_pos / (double)TILE_SIZE);
+    int y_index = (int)round((double)y_pos / (double)TILE_SIZE);
+    int iDir = static_cast<Enemy *>(pSprite)->GetDir();
     int iDice = 0;
 
     if (iDir == DIR_UP || iDir == DIR_DOWN)
     {
         // Look to make right or left turns
-        if(x_index > 0 && x_index < MAP_WIDTH)
+        if (x_index > 0 && x_index < MAP_WIDTH)
         {
             // Look right
-            if(tilemap[x_index+1][y_index] == 0)
+            if (tilemap[x_index + 1][y_index] == 0)
             {
-                if(y_pos == y_index*TILE_SIZE) 
-                {  
+                if (y_pos == y_index * TILE_SIZE)
+                {
                     // Roll dice to see if we turn right
-                    if(!(rand()%TURN_ODDS))
-                    {          
-                        static_cast<Enemy*>(pSprite)->SetDir(DIR_RIGHT);
-                        return(true);
+                    if (!(rand() % TURN_ODDS))
+                    {
+                        static_cast<Enemy *>(pSprite)->SetDir(DIR_RIGHT);
+                        return (true);
                     }
                 }
             }
 
             // Look left
-            if(tilemap[x_index-1][y_index] == 0)
+            if (tilemap[x_index - 1][y_index] == 0)
             {
-                if(y_pos == y_index*TILE_SIZE)
+                if (y_pos == y_index * TILE_SIZE)
                 {
                     // Roll dice to see if we turn left
-                    if(!(rand()%TURN_ODDS))
-                    {                       
-                        static_cast<Enemy*>(pSprite)->SetDir(DIR_LEFT);
-                        return(true);
+                    if (!(rand() % TURN_ODDS))
+                    {
+                        static_cast<Enemy *>(pSprite)->SetDir(DIR_LEFT);
+                        return (true);
                     }
                 }
             }
-        }       
+        }
     }
     else // iDir is horizontal
     {
         // Look to make up or down turns
-        if(y_index > 0 && y_index < MAP_HEIGHT)
+        if (y_index > 0 && y_index < MAP_HEIGHT)
         {
             // Look up
-            if(tilemap[x_index][y_index-1] == 0)
+            if (tilemap[x_index][y_index - 1] == 0)
             {
-                if(x_pos == x_index*TILE_SIZE) 
-                {    
+                if (x_pos == x_index * TILE_SIZE)
+                {
                     // Roll dice to see if we turn up
-                    if(!(rand()%TURN_ODDS))
-                    {                                
-                        static_cast<Enemy*>(pSprite)->SetDir(DIR_UP);
-                        return(true);
+                    if (!(rand() % TURN_ODDS))
+                    {
+                        static_cast<Enemy *>(pSprite)->SetDir(DIR_UP);
+                        return (true);
                     }
                 }
             }
 
             // Look down
-            if(tilemap[x_index][y_index+1] == 0)
+            if (tilemap[x_index][y_index + 1] == 0)
             {
-                if(x_pos == x_index*TILE_SIZE)
+                if (x_pos == x_index * TILE_SIZE)
                 {
                     // Roll dice to see if we turn down
-                    if(!(rand()%TURN_ODDS))
-                    {                      
-                        static_cast<Enemy*>(pSprite)->SetDir(DIR_DOWN);
-                        return(true);
+                    if (!(rand() % TURN_ODDS))
+                    {
+                        static_cast<Enemy *>(pSprite)->SetDir(DIR_DOWN);
+                        return (true);
                     }
                 }
             }
-        }         
+        }
     }
-  
-    return(false);
+
+    return (false);
 }
+
+bool Game::PhaserCheck(Sprite *pSprite)
+{
+    // Get player and enemy positions
+    SDL_Rect pRect = player->GetRect();
+    SDL_Rect eRect = pSprite->GetRect();
+    int dist = eRect.x - pRect.x;
+    int dir = static_cast<Enemy *>(pSprite)->GetDir();
+
+    // See if they're on the same horzontal line
+    if (eRect.y / TILE_SIZE == pRect.y / TILE_SIZE)
+    {
+        // Is enemy pointing toward player?
+        if (dist > 0)
+        {
+            if (dir == DIR_LEFT)
+            {
+                //std::cout << "Enemy facing player to the left" << std::endl;
+                ;
+            }
+            else
+            {
+                return (false);
+            }
+        }
+        else // dist < 0
+        {
+            if (dir == DIR_RIGHT)
+            {
+                //std::cout << "Enemy facing player to the right" << std::endl;
+                ;
+            }
+            else
+            {
+                return (false);
+            }
+        }
+
+        // See if there's a clear line of fire
+        int ex_index = eRect.x / TILE_SIZE;
+        int ey_index = eRect.y / TILE_SIZE;
+        int px_index = pRect.x / TILE_SIZE;
+        int py_index = pRect.y / TILE_SIZE;
+
+        if (dir == DIR_LEFT)
+        {
+            // Check for rock tiles in line of sight
+            for (int i = px_index; i < ex_index; i++)
+            {
+                if (tilemap[i][ey_index] == 1)
+                {
+                    return (false);
+                }
+            }
+        }
+        else
+        {
+            for (int i = ex_index; i < px_index; i++)
+            {
+                if (tilemap[i][ey_index] == 1)
+                {
+                    return (false);
+                }
+            }
+        }
+
+        // Clear line, so store firing coordinates
+        m_EnemyFire.Enemy_Num = 1;
+        m_EnemyFire.e_xpos = eRect.x;
+        m_EnemyFire.e_ypos = eRect.y + TILE_SIZE/2;
+        m_EnemyFire.p_xpos = pRect.x + TILE_SIZE/2;
+        m_EnemyFire.p_ypos = eRect.y + TILE_SIZE/2;
+
+        m_bFirePhaser = true;
+
+        return (true);
+    }
+
+    return (false);
+}
+
+void Game::LoadWavs()
+{
+    // Load squash sound
+    m_pSquashWav = Mix_LoadWAV("/home/terry/repos/drd2/snd/squash.wav");  
+
+    // Load squash sound
+    m_pPhaserWav = Mix_LoadWAV("/home/terry/repos/drd2/snd/tos_phaser_7.wav"); 
+    
+    // Load scream sounds
+    m_pScreamWavs[0] = Mix_LoadWAV("/home/terry/repos/drd2/snd/man_die_1.wav"); 
+    m_pScreamWavs[1] = Mix_LoadWAV("/home/terry/repos/drd2/snd/man_die_2.wav"); 
+    m_pScreamWavs[2] = Mix_LoadWAV("/home/terry/repos/drd2/snd/man_die_3.wav"); 
+    m_pScreamWavs[3] = Mix_LoadWAV("/home/terry/repos/drd2/snd/man_die_4.wav");   
+    m_pScreamWavs[4] = Mix_LoadWAV("/home/terry/repos/drd2/snd/man_die_5.wav"); 
+    m_pScreamWavs[5] = Mix_LoadWAV("/home/terry/repos/drd2/snd/man_die_6.wav"); 
+    m_pScreamWavs[6] = Mix_LoadWAV("/home/terry/repos/drd2/snd/man_die_7.wav"); 
+    m_pScreamWavs[7] = Mix_LoadWAV("/home/terry/repos/drd2/snd/wilhelm_scream.wav");         
+}
+

@@ -29,7 +29,8 @@ enum
     DIR_RIGHT = 1,
     DIR_UP = 2,
     DIR_DOWN = 3,
-    TURN_ODDS = 4    
+    TURN_ODDS = 4,
+    MAX_SCREAMS = 8    
 };  
 
 class Game 
@@ -52,6 +53,15 @@ private:
     SDL_GameController *m_pController;   
     int tilemap[MAP_WIDTH][MAP_HEIGHT];
     int m_iEnemyNum;
+    bool m_bFiring;
+    bool m_bFirePhaser;
+    bool m_bCeaseFire;
+    int m_iFireIndex;
+    int m_iPhaserCh;
+
+    Mix_Chunk *m_pSquashWav;
+    Mix_Chunk *m_pPhaserWav;    
+    Mix_Chunk *m_pScreamWavs[MAX_SCREAMS];
 
     struct EnemyInit
     {
@@ -60,7 +70,17 @@ private:
         int dir;
     };
 
+    struct EnemyFire
+    {
+        int Enemy_Num;
+        int e_xpos;
+        int e_ypos;
+        int p_xpos;
+        int p_ypos;
+    };
+
     EnemyInit* m_pEnemyInit;
+    EnemyFire m_EnemyFire;
 
     void LoadMap();
     void Run();
@@ -69,7 +89,9 @@ private:
     void Draw();    
     bool SpriteCollide(Sprite *pSprite, SpriteGroup *pSpritegroup, bool bRemove); 
     void LoadEggs();
-    bool TurnCheck(Sprite *pSprite);    
+    bool TurnCheck(Sprite *pSprite); 
+    bool PhaserCheck(Sprite *pSprite);   
+    void LoadWavs();
 };
 
 
