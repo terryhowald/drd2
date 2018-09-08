@@ -7,6 +7,7 @@
 #include <SDL2/SDL_mixer.h>
 #include <SDL2/SDL_ttf.h>
 #include "spritegroup.h"
+#include <string>
 
 enum 
 {
@@ -65,6 +66,7 @@ private:
     int m_iEnemyDead;
     int m_iEggsSaved;
     int m_iTotalScore;
+    std::string m_sBasePath;
 
     Mix_Chunk *m_pSquashWav;
     Mix_Chunk *m_pPhaserWav;    

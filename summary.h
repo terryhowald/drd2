@@ -22,6 +22,7 @@ private:
     int m_iEggsSaved;
     int m_iTotalScore;
     TTF_Font* m_pFont;
+    std::string m_sBasePath;
 
 };
 

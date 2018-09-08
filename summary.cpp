@@ -3,7 +3,9 @@
 
 Summary::Summary() : m_pFont(nullptr)
 {
-    m_pFont = TTF_OpenFont("/home/terry/repos/drd2/ttf/TOS_Title.ttf", 64);
+    m_sBasePath = SDL_GetBasePath(); 
+    std::string sFont = m_sBasePath + "../ttf/TOS_Title.ttf";
+    m_pFont = TTF_OpenFont(sFont.c_str(), 64);
 }
 
 Summary::~Summary()
@@ -16,18 +18,18 @@ Summary::~Summary()
 
 void Summary::Show(int iScreen)
 {
-    // Determine which screen to display    
+    // Determine which screen to display         
     std::string strScreen;
     std::string strWave;
     if (SHOW_SG_SCREEN == iScreen) 
     {
-        strScreen = "/home/terry/repos/drd2/img/sg.png";
-        strWave = "/home/terry/repos/drd2/snd/tos_sickbay_venus_drug.wav";
+        strScreen = m_sBasePath + "../img/sg.png";
+        strWave = m_sBasePath + "../snd/tos_sickbay_venus_drug.wav";
     }
     else 
     {
-        strScreen = "/home/terry/repos/drd2/img/go.png";
-        strWave = "/home/terry/repos/drd2/snd/tos_sickbayscannerheartbeats.wav";      
+        strScreen = m_sBasePath + "../img/go.png";
+        strWave = m_sBasePath + "../snd/tos_sickbayscannerheartbeats.wav";      
     }  
 
     // Load image

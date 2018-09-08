@@ -23,7 +23,7 @@ SpriteGroup *pEggGroup = nullptr;
 Game::Game()
     : m_bPlaying(false), m_pWindow(NULL), m_pController(NULL), m_iEnemyNum(0),
       m_pEnemyInit(nullptr), m_bFiring(false), m_bCeaseFire(false), m_bFirePhaser(false),
-      m_iPhaserPower(0), m_iEnemyDead(0), m_iEggsSaved(0), m_iTotalScore(0)
+      m_iPhaserPower(0), m_iEnemyDead(0), m_iEggsSaved(0), m_iTotalScore(0), m_iScream(0)
 {
     // Initialize SDL2 library
     if (0 == SDL_Init(SDL_INIT_EVERYTHING))
@@ -66,10 +66,11 @@ Game::Game()
         // Init enemy init array
         m_pEnemyInit = new EnemyInit[NUM_TUNNELS];
 
+        // Get base path
+        m_sBasePath = SDL_GetBasePath();        
+
         // Load wave files
         LoadWavs();
-
-        m_iScream = 0;
     }
 }
 
@@ -181,7 +182,8 @@ void Game::New()
     m_iEggsSaved = 0;
 
     // Setup background sound
-    Mix_Music *music = Mix_LoadMUS("/home/terry/repos/drd2/snd/tos_planet_3.wav");
+    std::string sPath = m_sBasePath + "../snd/tos_planet_3.wav";
+    Mix_Music *music = Mix_LoadMUS(sPath.c_str());
     if (NULL != music)
     {
         Mix_PlayMusic(music, -1);
@@ -195,7 +197,8 @@ void Game::New()
     // Create player
     int iRandX = (rand() % MAP_WIDTH) * TILE_SIZE;
     int iRandY = (rand() % MAP_HEIGHT) * TILE_SIZE;
-    player = new Player("/home/terry/repos/drd2/img/horta.png", iRandX, iRandY);
+    sPath = m_sBasePath + "../img/horta.png";
+    player = new Player(sPath.c_str(), iRandX, iRandY);
     m_iPlayerAlive = 255;
     m_iPhaserPower++;
 
@@ -204,6 +207,7 @@ void Game::New()
 
     // Create enemy(s)
     m_iEnemyNum++;
+    sPath = m_sBasePath + "../img/redshirt.png";
     for (int i = 0; i < m_iEnemyNum; i++)
     {
         // Get tunnel to place enemy
@@ -223,7 +227,7 @@ void Game::New()
             ypos += (50 + std::rand() % DISPLAY_HEIGHT / 2);
 
         // Create enemy
-        enemy = new Enemy("/home/terry/repos/drd2/img/redshirt.png", xpos, ypos, dir);
+        enemy = new Enemy(sPath.c_str(), xpos, ypos, dir);
         pEnemyGroup->Add(enemy);
     }
 
@@ -327,6 +331,7 @@ void Game::Update()
             do
             {
                 iScream = rand()%8;
+                std::cout << "iScream = " << iScream << std::endl;
             } while(iScream == m_iScream);
             m_iScream = iScream;
 
@@ -549,6 +554,7 @@ void Game::LoadMap()
 void Game::LoadEggs()
 {
     // Setup tiles
+    std::string sEggs = m_sBasePath + "../img/egg.png";
     for (int row = 0; row < MAP_WIDTH; row++)
     {
         for (int column = 0; column < MAP_HEIGHT; column++)
@@ -556,7 +562,7 @@ void Game::LoadEggs()
             int iTile = tilemap[row][column];
             if (!iTile)
             {
-                Egg *pEgg = new Egg("/home/terry/repos/drd2/img/egg.png", row * TILE_SIZE, column * TILE_SIZE);
+                Egg *pEgg = new Egg(sEggs.c_str(), row * TILE_SIZE, column * TILE_SIZE);
                 pEggGroup->Add(pEgg);
             }
         }
@@ -764,20 +770,32 @@ bool Game::PhaserCheck(Sprite *pSprite)
 
 void Game::LoadWavs()
 {
-    // Load squash sound
-    m_pSquashWav = Mix_LoadWAV("/home/terry/repos/drd2/snd/squash.wav");  
+    std::string sPath;
 
     // Load squash sound
-    m_pPhaserWav = Mix_LoadWAV("/home/terry/repos/drd2/snd/tos_phaser_7.wav"); 
+    sPath = m_sBasePath + "../snd/squash.wav";
+    m_pSquashWav = Mix_LoadWAV(sPath.c_str());  
+
+    // Load squash sound
+    sPath = m_sBasePath + "../snd/tos_phaser_7.wav";    
+    m_pPhaserWav = Mix_LoadWAV(sPath.c_str()); 
     
     // Load scream sounds
-    m_pScreamWavs[0] = Mix_LoadWAV("/home/terry/repos/drd2/snd/man_die_1.wav"); 
-    m_pScreamWavs[1] = Mix_LoadWAV("/home/terry/repos/drd2/snd/man_die_2.wav"); 
-    m_pScreamWavs[2] = Mix_LoadWAV("/home/terry/repos/drd2/snd/man_die_3.wav"); 
-    m_pScreamWavs[3] = Mix_LoadWAV("/home/terry/repos/drd2/snd/man_die_4.wav");   
-    m_pScreamWavs[4] = Mix_LoadWAV("/home/terry/repos/drd2/snd/man_die_5.wav"); 
-    m_pScreamWavs[5] = Mix_LoadWAV("/home/terry/repos/drd2/snd/man_die_6.wav"); 
-    m_pScreamWavs[6] = Mix_LoadWAV("/home/terry/repos/drd2/snd/man_die_7.wav"); 
-    m_pScreamWavs[7] = Mix_LoadWAV("/home/terry/repos/drd2/snd/wilhelm_scream.wav");         
+    sPath = m_sBasePath + "../snd/man_die_1.wav"; 
+    m_pScreamWavs[0] = Mix_LoadWAV(sPath.c_str()); 
+    sPath = m_sBasePath + "../snd/man_die_2.wav"; 
+    m_pScreamWavs[1] = Mix_LoadWAV(sPath.c_str());      
+    sPath = m_sBasePath + "../snd/man_die_3.wav"; 
+    m_pScreamWavs[2] = Mix_LoadWAV(sPath.c_str());       
+    sPath = m_sBasePath + "../snd/man_die_4.wav"; 
+    m_pScreamWavs[3] = Mix_LoadWAV(sPath.c_str());     
+    sPath = m_sBasePath + "../snd/man_die_5.wav"; 
+    m_pScreamWavs[4] = Mix_LoadWAV(sPath.c_str());      
+    sPath = m_sBasePath + "../snd/man_die_6.wav"; 
+    m_pScreamWavs[5] = Mix_LoadWAV(sPath.c_str());     
+    sPath = m_sBasePath + "../snd/man_die_7.wav"; 
+    m_pScreamWavs[6] = Mix_LoadWAV(sPath.c_str());     
+    sPath = m_sBasePath + "../snd/wilhelm_scream.wav"; 
+    m_pScreamWavs[7] = Mix_LoadWAV(sPath.c_str());             
 }
 

@@ -59,6 +59,8 @@ SDL2/SDL_ttf.h
 -
 spritegroup.h
 /home/terry/repos/drd2/spritegroup.h
+string
+-
 
 /home/terry/repos/drd2/main.cpp
 game.h
