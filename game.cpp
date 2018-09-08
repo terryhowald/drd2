@@ -331,7 +331,7 @@ void Game::Update()
             do
             {
                 iScream = rand()%8;
-                std::cout << "iScream = " << iScream << std::endl;
+                //std::cout << "iScream = " << iScream << std::endl;
             } while(iScream == m_iScream);
             m_iScream = iScream;
 
@@ -709,6 +709,11 @@ bool Game::PhaserCheck(Sprite *pSprite)
             }
             else
             {
+                // Decide if should turn to the left
+                if(!(rand() % REVERSE_ODDS))
+                {
+                    static_cast<Enemy *>(pSprite)->SetDir(DIR_LEFT);
+                }
                 return (false);
             }
         }
@@ -721,6 +726,11 @@ bool Game::PhaserCheck(Sprite *pSprite)
             }
             else
             {
+                // Decide if should turn to the right
+                if(!(rand() % REVERSE_ODDS))
+                {
+                    static_cast<Enemy *>(pSprite)->SetDir(DIR_RIGHT);
+                }                
                 return (false);
             }
         }

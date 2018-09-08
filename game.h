@@ -32,6 +32,7 @@ enum
     DIR_UP = 2,
     DIR_DOWN = 3,
     TURN_ODDS = 4,
+    REVERSE_ODDS = 50,
     MAX_SCREAMS = 8    
 };  
 
