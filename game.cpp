@@ -44,6 +44,12 @@ Game::Game()
         // Initialize SDL2 Mixer library
         Mix_OpenAudio(48000, MIX_DEFAULT_FORMAT, 2, 4096);
 
+        // Initialize SDL2 TTF
+        if (TTF_Init() == -1)
+        {
+            std::cout << "Error : SDL_TTF" << std::endl;
+        }
+
         // Initialize SDL2 game controller
         for (int i = 0; i < SDL_NumJoysticks(); ++i)
         {
@@ -52,7 +58,7 @@ Game::Game()
                 m_pController = SDL_GameControllerOpen(i);
                 break;
             }
-        }
+        }       
 
         // Set initial running flag
         m_bRunning = true;
@@ -119,6 +125,9 @@ Game::~Game()
         m_pWindow = NULL;
     }
 
+    // Shutdown SDL2 TTF
+    TTF_Quit();
+
     // Shutdown SDL2 Image
     IMG_Quit();
 
@@ -148,7 +157,8 @@ void Game::ShowScreen(int iScreen)
     // Accumlate data
     if(iScreen != SHOW_SG_SCREEN)
     {
-        pSummary->SetEnemyDead(m_iEnemyDead);
+        pSummary->SetEnemyDead(m_iEnemyDead*10);
+        m_iEggsSaved = pEggGroup->Size();
         pSummary->SetEggsSaved(m_iEggsSaved);
         m_iTotalScore += (m_iEnemyDead*10 + m_iEggsSaved);
         pSummary->SetTotalScore(m_iTotalScore);

@@ -1,11 +1,18 @@
 #include "summary.h"
 #include "game.h"
 
-Summary::Summary()
-{}
+Summary::Summary() : m_pFont(nullptr)
+{
+    m_pFont = TTF_OpenFont("/home/terry/repos/drd2/ttf/TOS_Title.ttf", 64);
+}
 
 Summary::~Summary()
-{}
+{
+    if(nullptr != m_pFont)
+    {
+        TTF_CloseFont(m_pFont);
+    }
+}
 
 void Summary::Show(int iScreen)
 {
@@ -32,6 +39,30 @@ void Summary::Show(int iScreen)
 
     // Copy image to offscreen 
     SDL_RenderCopy(Game::m_pRenderer, texture, NULL, NULL);   
+
+    // Display text if GO screen
+    if(SHOW_GO_SCREEN == iScreen)
+    {
+        SDL_Rect rect;
+
+        // Display enemy dead count
+        rect.x = 580;
+        rect.y = 238;
+        std::string sEnemyDead = std::to_string(m_iEnemyDead);
+        DisplayText(sEnemyDead, rect);
+
+        // Display eggs saved count
+        rect.x = 580;
+        rect.y = 344;
+        std::string sEggsSaved = std::to_string(m_iEggsSaved);
+        DisplayText(sEggsSaved, rect);    
+
+        // Display total score
+        rect.x = 580;
+        rect.y = 450;
+        std::string sTotalScore = std::to_string(m_iTotalScore);
+        DisplayText(sTotalScore, rect);              
+    }
            
     // Blit offscreen to display
     SDL_RenderPresent(Game::m_pRenderer);    
@@ -54,8 +85,13 @@ void Summary::Show(int iScreen)
             switch(Game::m_Event.type) 
             {
                 case SDL_MOUSEBUTTONDOWN:
-                //case SDL_KEYDOWN:
                     bQuit = true;
+                    break;                
+                case SDL_KEYDOWN:
+                    if(SDLK_RETURN == Game::m_Event.key.keysym.sym)
+                    {              
+                        bQuit = true;
+                    }
                     break;
                 case SDL_QUIT:
                     bQuit = true;
@@ -89,4 +125,15 @@ void Summary::SetEggsSaved(int iVal)
 void Summary::SetTotalScore(int iVal)
 {
     m_iTotalScore = iVal;
+}
+
+void Summary::DisplayText(std::string text, SDL_Rect rect)
+{
+    SDL_Color white = {255, 255, 255, 255};
+    SDL_Surface* surf = TTF_RenderText_Blended(m_pFont, text.c_str(), white);
+    SDL_Texture* pLabelTexture = SDL_CreateTextureFromSurface(Game::m_pRenderer, surf);
+    SDL_FreeSurface(surf);
+
+    SDL_QueryTexture(pLabelTexture, nullptr, nullptr, &rect.w, &rect.h);
+    SDL_RenderCopy(Game::m_pRenderer, pLabelTexture, nullptr, &rect);
 }
