@@ -20,7 +20,7 @@ void Summary::Show(int iScreen)
     else 
     {
         strScreen = "/home/terry/repos/drd2/img/go.png";
-        strWave = "/home/terry/repos/drd2/snd/tos_sickbayscannerheartbeats.wav";        
+        strWave = "/home/terry/repos/drd2/snd/tos_sickbayscannerheartbeats.wav";      
     }  
 
     // Load image
@@ -74,4 +74,19 @@ void Summary::Show(int iScreen)
         SDL_DestroyTexture(texture);
 
    return;        
+}
+
+void Summary::SetEnemyDead(int iVal)
+{
+    m_iEnemyDead = iVal;
+}
+
+void Summary::SetEggsSaved(int iVal)
+{
+    m_iEggsSaved = iVal;
+}
+
+void Summary::SetTotalScore(int iVal)
+{
+    m_iTotalScore = iVal;
 }

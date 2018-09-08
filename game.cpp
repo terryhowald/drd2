@@ -22,7 +22,8 @@ SpriteGroup *pEggGroup = nullptr;
 
 Game::Game()
     : m_bPlaying(false), m_pWindow(NULL), m_pController(NULL), m_iEnemyNum(0),
-      m_pEnemyInit(nullptr), m_bFiring(false), m_bCeaseFire(false), m_bFirePhaser(false)
+      m_pEnemyInit(nullptr), m_bFiring(false), m_bCeaseFire(false), m_bFirePhaser(false),
+      m_iPhaserPower(0), m_iEnemyDead(0), m_iEggsSaved(0), m_iTotalScore(0)
 {
     // Initialize SDL2 library
     if (0 == SDL_Init(SDL_INIT_EVERYTHING))
@@ -61,6 +62,8 @@ Game::Game()
 
         // Load wave files
         LoadWavs();
+
+        m_iScream = 0;
     }
 }
 
@@ -141,17 +144,31 @@ void Game::ShowScreen(int iScreen)
 
     // Display summary screen
     Summary *pSummary = new Summary();
-    if (pSummary != nullptr)
+
+    // Accumlate data
+    if(iScreen != SHOW_SG_SCREEN)
     {
-        pSummary->Show(iScreen);
-        delete pSummary;
+        pSummary->SetEnemyDead(m_iEnemyDead);
+        pSummary->SetEggsSaved(m_iEggsSaved);
+        m_iTotalScore += (m_iEnemyDead*10 + m_iEggsSaved);
+        pSummary->SetTotalScore(m_iTotalScore);
     }
+
+    // Display summary
+    pSummary->Show(iScreen);
+
+    // Free when finished
+    delete pSummary;
 }
 
 void Game::New()
 {
     // Seed random number generator
     std::srand(std::time(0));
+
+    // Reset score fields
+    m_iEnemyDead = 0;
+    m_iEggsSaved = 0;
 
     // Setup background sound
     Mix_Music *music = Mix_LoadMUS("/home/terry/repos/drd2/snd/tos_planet_3.wav");
@@ -169,6 +186,8 @@ void Game::New()
     int iRandX = (rand() % MAP_WIDTH) * TILE_SIZE;
     int iRandY = (rand() % MAP_HEIGHT) * TILE_SIZE;
     player = new Player("/home/terry/repos/drd2/img/horta.png", iRandX, iRandY);
+    m_iPlayerAlive = 255;
+    m_iPhaserPower++;
 
     // Create enemy group
     pEnemyGroup = new SpriteGroup();
@@ -294,10 +313,19 @@ void Game::Update()
         // Make enemy dying sound
         if(nullptr != m_pScreamWavs) 
         {
-            int iScream = rand()%8;
+            int iScream = 0;
+            do
+            {
+                iScream = rand()%8;
+            } while(iScream == m_iScream);
+            m_iScream = iScream;
+
             Mix_PlayChannel(3, m_pScreamWavs[iScream], 0);
             Mix_Volume(3, MIX_MAX_VOLUME/4);
         }
+
+        // Update enemy dead count
+        m_iEnemyDead++;
 
         // Check enemy count
         if (pEnemyGroup->Size() == 0)
@@ -359,7 +387,7 @@ void Game::Update()
         PhaserCheck(sprites[i]);
 
         if(m_bFirePhaser)
-        {
+        { 
             // Make a sound when redshirt fires
             if(nullptr != m_pPhaserWav) 
             {
@@ -369,7 +397,7 @@ void Game::Update()
         }
         else // Shut off phaser firing sound
         {
-            Mix_HaltChannel(1);
+            Mix_HaltChannel(m_iPhaserCh);
         }
     }
 }
@@ -378,7 +406,7 @@ void Game::Draw()
 {
     // Clear offscreen to black
     SDL_SetRenderDrawColor(m_pRenderer, 0, 0, 0, SDL_ALPHA_OPAQUE);
-    SDL_RenderClear(m_pRenderer);
+    SDL_RenderClear(m_pRenderer);      
 
     // Draw map
     pTileGroup->Draw();
@@ -386,12 +414,23 @@ void Game::Draw()
     // Draw eggs
     pEggGroup->Draw();
 
-    // Draw phaser, if firing
+      // Draw phaser, if firing
     if (m_bFirePhaser)
     {
-        //std::cout << "Draw phaser fire" << std::endl;
-        SDL_SetRenderDrawColor(m_pRenderer, 255, 255, 255, SDL_ALPHA_OPAQUE);
-        SDL_RenderDrawLine(m_pRenderer, m_EnemyFire.e_xpos, m_EnemyFire.e_ypos, m_EnemyFire.p_xpos, m_EnemyFire.p_ypos);   
+        // Check if player is dead
+        m_iPlayerAlive--; // -= m_iPhaserPower;
+        player->SetAlpha(m_iPlayerAlive);        
+        if(m_iPlayerAlive <= (m_iPhaserPower-1))
+        {
+            m_bPlaying = false;
+            Mix_HaltChannel(m_iPhaserCh);         
+        }   
+        else
+        {
+            // Draw phaser line
+            SDL_SetRenderDrawColor(m_pRenderer, 255, 255, 255, SDL_ALPHA_OPAQUE);
+            SDL_RenderDrawLine(m_pRenderer, m_EnemyFire.e_xpos, m_EnemyFire.e_ypos, m_EnemyFire.p_xpos, m_EnemyFire.p_ypos);   
+        }
     } 
 
     // Draw enemy(s);

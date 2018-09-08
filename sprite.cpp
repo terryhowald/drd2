@@ -4,7 +4,7 @@
 #include "game.h"
 
 Sprite::Sprite(const char *fileName, int xpos, int ypos) : 
-    m_pTexture(nullptr), m_dAngle(0.0), m_Flip(SDL_FLIP_NONE)
+    m_pTexture(nullptr), m_dAngle(0.0), m_Flip(SDL_FLIP_NONE), m_iAlpha(255)
 {
     if (nullptr != fileName)
     {
@@ -45,6 +45,13 @@ void Sprite::Draw()
     destRect.y = m_Rect.y;
     destRect.w = destRect.h = TILE_SIZE;
 
+    // Alter alpha, if needed
+    if(255 != m_iAlpha)
+    {
+        SDL_SetTextureAlphaMod(m_pTexture, m_iAlpha);
+    }
+
+    // Render texture
     SDL_RenderCopyEx(Game::m_pRenderer, m_pTexture, &srcRect, &destRect, m_dAngle, nullptr, m_Flip);
 }
 
@@ -74,4 +81,9 @@ SDL_Rect Sprite::GetRect()
     rect.w = rect.h = TILE_SIZE;
 
     return rect;
+}
+
+void Sprite::SetAlpha(Uint8 iAlpha)
+{
+    m_iAlpha = iAlpha;
 }

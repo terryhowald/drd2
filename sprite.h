@@ -14,6 +14,7 @@ public:
     SDL_Texture* Get_Image() const;  
     bool operator==(const Sprite &other) const; 
     SDL_Rect GetRect();   
+    void SetAlpha(Uint8 iAlpha);
    
 
 protected:
@@ -21,6 +22,7 @@ protected:
     SDL_Rect m_Rect;
     double m_dAngle;   
     SDL_RendererFlip m_Flip;
+    Uint8 m_iAlpha;
 
 private:
     SDL_Texture* LoadTexture(const char* fileName);

@@ -58,6 +58,12 @@ private:
     bool m_bCeaseFire;
     int m_iFireIndex;
     int m_iPhaserCh;
+    int m_iScream;
+    int m_iPlayerAlive;
+    int m_iPhaserPower;
+    int m_iEnemyDead;
+    int m_iEggsSaved;
+    int m_iTotalScore;
 
     Mix_Chunk *m_pSquashWav;
     Mix_Chunk *m_pPhaserWav;    

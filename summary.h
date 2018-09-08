@@ -8,8 +8,15 @@ public:
     ~Summary();
     
     void Show(int iScreen);
+    void SetEnemyDead(int iVal);
+    void SetEggsSaved(int iVal);
+    void SetTotalScore(int iVal);
 
 private:
+
+    int m_iEnemyDead;
+    int m_iEggsSaved;
+    int m_iTotalScore;
 
 };
 
