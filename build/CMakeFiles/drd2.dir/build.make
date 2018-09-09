@@ -60,15 +60,15 @@ include CMakeFiles/drd2.dir/flags.make
 CMakeFiles/drd2.dir/main.cpp.o: CMakeFiles/drd2.dir/flags.make
 CMakeFiles/drd2.dir/main.cpp.o: ../main.cpp
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/terry/repos/drd2/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building CXX object CMakeFiles/drd2.dir/main.cpp.o"
-	/usr/bin/x86_64-linux-gnu-g++-7  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/drd2.dir/main.cpp.o -c /home/terry/repos/drd2/main.cpp
+	/usr/bin/clang++-6.0  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/drd2.dir/main.cpp.o -c /home/terry/repos/drd2/main.cpp
 
 CMakeFiles/drd2.dir/main.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/drd2.dir/main.cpp.i"
-	/usr/bin/x86_64-linux-gnu-g++-7 $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/terry/repos/drd2/main.cpp > CMakeFiles/drd2.dir/main.cpp.i
+	/usr/bin/clang++-6.0 $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/terry/repos/drd2/main.cpp > CMakeFiles/drd2.dir/main.cpp.i
 
 CMakeFiles/drd2.dir/main.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/drd2.dir/main.cpp.s"
-	/usr/bin/x86_64-linux-gnu-g++-7 $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/terry/repos/drd2/main.cpp -o CMakeFiles/drd2.dir/main.cpp.s
+	/usr/bin/clang++-6.0 $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/terry/repos/drd2/main.cpp -o CMakeFiles/drd2.dir/main.cpp.s
 
 CMakeFiles/drd2.dir/main.cpp.o.requires:
 
@@ -84,15 +84,15 @@ CMakeFiles/drd2.dir/main.cpp.o.provides.build: CMakeFiles/drd2.dir/main.cpp.o
 CMakeFiles/drd2.dir/game.cpp.o: CMakeFiles/drd2.dir/flags.make
 CMakeFiles/drd2.dir/game.cpp.o: ../game.cpp
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/terry/repos/drd2/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Building CXX object CMakeFiles/drd2.dir/game.cpp.o"
-	/usr/bin/x86_64-linux-gnu-g++-7  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/drd2.dir/game.cpp.o -c /home/terry/repos/drd2/game.cpp
+	/usr/bin/clang++-6.0  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/drd2.dir/game.cpp.o -c /home/terry/repos/drd2/game.cpp
 
 CMakeFiles/drd2.dir/game.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/drd2.dir/game.cpp.i"
-	/usr/bin/x86_64-linux-gnu-g++-7 $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/terry/repos/drd2/game.cpp > CMakeFiles/drd2.dir/game.cpp.i
+	/usr/bin/clang++-6.0 $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/terry/repos/drd2/game.cpp > CMakeFiles/drd2.dir/game.cpp.i
 
 CMakeFiles/drd2.dir/game.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/drd2.dir/game.cpp.s"
-	/usr/bin/x86_64-linux-gnu-g++-7 $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/terry/repos/drd2/game.cpp -o CMakeFiles/drd2.dir/game.cpp.s
+	/usr/bin/clang++-6.0 $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/terry/repos/drd2/game.cpp -o CMakeFiles/drd2.dir/game.cpp.s
 
 CMakeFiles/drd2.dir/game.cpp.o.requires:
 
@@ -108,15 +108,15 @@ CMakeFiles/drd2.dir/game.cpp.o.provides.build: CMakeFiles/drd2.dir/game.cpp.o
 CMakeFiles/drd2.dir/summary.cpp.o: CMakeFiles/drd2.dir/flags.make
 CMakeFiles/drd2.dir/summary.cpp.o: ../summary.cpp
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/terry/repos/drd2/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Building CXX object CMakeFiles/drd2.dir/summary.cpp.o"
-	/usr/bin/x86_64-linux-gnu-g++-7  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/drd2.dir/summary.cpp.o -c /home/terry/repos/drd2/summary.cpp
+	/usr/bin/clang++-6.0  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/drd2.dir/summary.cpp.o -c /home/terry/repos/drd2/summary.cpp
 
 CMakeFiles/drd2.dir/summary.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/drd2.dir/summary.cpp.i"
-	/usr/bin/x86_64-linux-gnu-g++-7 $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/terry/repos/drd2/summary.cpp > CMakeFiles/drd2.dir/summary.cpp.i
+	/usr/bin/clang++-6.0 $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/terry/repos/drd2/summary.cpp > CMakeFiles/drd2.dir/summary.cpp.i
 
 CMakeFiles/drd2.dir/summary.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/drd2.dir/summary.cpp.s"
-	/usr/bin/x86_64-linux-gnu-g++-7 $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/terry/repos/drd2/summary.cpp -o CMakeFiles/drd2.dir/summary.cpp.s
+	/usr/bin/clang++-6.0 $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/terry/repos/drd2/summary.cpp -o CMakeFiles/drd2.dir/summary.cpp.s
 
 CMakeFiles/drd2.dir/summary.cpp.o.requires:
 
@@ -132,15 +132,15 @@ CMakeFiles/drd2.dir/summary.cpp.o.provides.build: CMakeFiles/drd2.dir/summary.cp
 CMakeFiles/drd2.dir/sprite.cpp.o: CMakeFiles/drd2.dir/flags.make
 CMakeFiles/drd2.dir/sprite.cpp.o: ../sprite.cpp
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/terry/repos/drd2/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_4) "Building CXX object CMakeFiles/drd2.dir/sprite.cpp.o"
-	/usr/bin/x86_64-linux-gnu-g++-7  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/drd2.dir/sprite.cpp.o -c /home/terry/repos/drd2/sprite.cpp
+	/usr/bin/clang++-6.0  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/drd2.dir/sprite.cpp.o -c /home/terry/repos/drd2/sprite.cpp
 
 CMakeFiles/drd2.dir/sprite.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/drd2.dir/sprite.cpp.i"
-	/usr/bin/x86_64-linux-gnu-g++-7 $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/terry/repos/drd2/sprite.cpp > CMakeFiles/drd2.dir/sprite.cpp.i
+	/usr/bin/clang++-6.0 $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/terry/repos/drd2/sprite.cpp > CMakeFiles/drd2.dir/sprite.cpp.i
 
 CMakeFiles/drd2.dir/sprite.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/drd2.dir/sprite.cpp.s"
-	/usr/bin/x86_64-linux-gnu-g++-7 $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/terry/repos/drd2/sprite.cpp -o CMakeFiles/drd2.dir/sprite.cpp.s
+	/usr/bin/clang++-6.0 $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/terry/repos/drd2/sprite.cpp -o CMakeFiles/drd2.dir/sprite.cpp.s
 
 CMakeFiles/drd2.dir/sprite.cpp.o.requires:
 
@@ -156,15 +156,15 @@ CMakeFiles/drd2.dir/sprite.cpp.o.provides.build: CMakeFiles/drd2.dir/sprite.cpp.
 CMakeFiles/drd2.dir/spritegroup.cpp.o: CMakeFiles/drd2.dir/flags.make
 CMakeFiles/drd2.dir/spritegroup.cpp.o: ../spritegroup.cpp
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/terry/repos/drd2/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_5) "Building CXX object CMakeFiles/drd2.dir/spritegroup.cpp.o"
-	/usr/bin/x86_64-linux-gnu-g++-7  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/drd2.dir/spritegroup.cpp.o -c /home/terry/repos/drd2/spritegroup.cpp
+	/usr/bin/clang++-6.0  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/drd2.dir/spritegroup.cpp.o -c /home/terry/repos/drd2/spritegroup.cpp
 
 CMakeFiles/drd2.dir/spritegroup.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/drd2.dir/spritegroup.cpp.i"
-	/usr/bin/x86_64-linux-gnu-g++-7 $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/terry/repos/drd2/spritegroup.cpp > CMakeFiles/drd2.dir/spritegroup.cpp.i
+	/usr/bin/clang++-6.0 $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/terry/repos/drd2/spritegroup.cpp > CMakeFiles/drd2.dir/spritegroup.cpp.i
 
 CMakeFiles/drd2.dir/spritegroup.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/drd2.dir/spritegroup.cpp.s"
-	/usr/bin/x86_64-linux-gnu-g++-7 $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/terry/repos/drd2/spritegroup.cpp -o CMakeFiles/drd2.dir/spritegroup.cpp.s
+	/usr/bin/clang++-6.0 $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/terry/repos/drd2/spritegroup.cpp -o CMakeFiles/drd2.dir/spritegroup.cpp.s
 
 CMakeFiles/drd2.dir/spritegroup.cpp.o.requires:
 
@@ -180,15 +180,15 @@ CMakeFiles/drd2.dir/spritegroup.cpp.o.provides.build: CMakeFiles/drd2.dir/sprite
 CMakeFiles/drd2.dir/player.cpp.o: CMakeFiles/drd2.dir/flags.make
 CMakeFiles/drd2.dir/player.cpp.o: ../player.cpp
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/terry/repos/drd2/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_6) "Building CXX object CMakeFiles/drd2.dir/player.cpp.o"
-	/usr/bin/x86_64-linux-gnu-g++-7  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/drd2.dir/player.cpp.o -c /home/terry/repos/drd2/player.cpp
+	/usr/bin/clang++-6.0  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/drd2.dir/player.cpp.o -c /home/terry/repos/drd2/player.cpp
 
 CMakeFiles/drd2.dir/player.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/drd2.dir/player.cpp.i"
-	/usr/bin/x86_64-linux-gnu-g++-7 $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/terry/repos/drd2/player.cpp > CMakeFiles/drd2.dir/player.cpp.i
+	/usr/bin/clang++-6.0 $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/terry/repos/drd2/player.cpp > CMakeFiles/drd2.dir/player.cpp.i
 
 CMakeFiles/drd2.dir/player.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/drd2.dir/player.cpp.s"
-	/usr/bin/x86_64-linux-gnu-g++-7 $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/terry/repos/drd2/player.cpp -o CMakeFiles/drd2.dir/player.cpp.s
+	/usr/bin/clang++-6.0 $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/terry/repos/drd2/player.cpp -o CMakeFiles/drd2.dir/player.cpp.s
 
 CMakeFiles/drd2.dir/player.cpp.o.requires:
 
@@ -204,15 +204,15 @@ CMakeFiles/drd2.dir/player.cpp.o.provides.build: CMakeFiles/drd2.dir/player.cpp.
 CMakeFiles/drd2.dir/enemy.cpp.o: CMakeFiles/drd2.dir/flags.make
 CMakeFiles/drd2.dir/enemy.cpp.o: ../enemy.cpp
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/terry/repos/drd2/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_7) "Building CXX object CMakeFiles/drd2.dir/enemy.cpp.o"
-	/usr/bin/x86_64-linux-gnu-g++-7  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/drd2.dir/enemy.cpp.o -c /home/terry/repos/drd2/enemy.cpp
+	/usr/bin/clang++-6.0  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/drd2.dir/enemy.cpp.o -c /home/terry/repos/drd2/enemy.cpp
 
 CMakeFiles/drd2.dir/enemy.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/drd2.dir/enemy.cpp.i"
-	/usr/bin/x86_64-linux-gnu-g++-7 $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/terry/repos/drd2/enemy.cpp > CMakeFiles/drd2.dir/enemy.cpp.i
+	/usr/bin/clang++-6.0 $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/terry/repos/drd2/enemy.cpp > CMakeFiles/drd2.dir/enemy.cpp.i
 
 CMakeFiles/drd2.dir/enemy.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/drd2.dir/enemy.cpp.s"
-	/usr/bin/x86_64-linux-gnu-g++-7 $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/terry/repos/drd2/enemy.cpp -o CMakeFiles/drd2.dir/enemy.cpp.s
+	/usr/bin/clang++-6.0 $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/terry/repos/drd2/enemy.cpp -o CMakeFiles/drd2.dir/enemy.cpp.s
 
 CMakeFiles/drd2.dir/enemy.cpp.o.requires:
 
@@ -228,15 +228,15 @@ CMakeFiles/drd2.dir/enemy.cpp.o.provides.build: CMakeFiles/drd2.dir/enemy.cpp.o
 CMakeFiles/drd2.dir/tile.cpp.o: CMakeFiles/drd2.dir/flags.make
 CMakeFiles/drd2.dir/tile.cpp.o: ../tile.cpp
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/terry/repos/drd2/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_8) "Building CXX object CMakeFiles/drd2.dir/tile.cpp.o"
-	/usr/bin/x86_64-linux-gnu-g++-7  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/drd2.dir/tile.cpp.o -c /home/terry/repos/drd2/tile.cpp
+	/usr/bin/clang++-6.0  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/drd2.dir/tile.cpp.o -c /home/terry/repos/drd2/tile.cpp
 
 CMakeFiles/drd2.dir/tile.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/drd2.dir/tile.cpp.i"
-	/usr/bin/x86_64-linux-gnu-g++-7 $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/terry/repos/drd2/tile.cpp > CMakeFiles/drd2.dir/tile.cpp.i
+	/usr/bin/clang++-6.0 $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/terry/repos/drd2/tile.cpp > CMakeFiles/drd2.dir/tile.cpp.i
 
 CMakeFiles/drd2.dir/tile.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/drd2.dir/tile.cpp.s"
-	/usr/bin/x86_64-linux-gnu-g++-7 $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/terry/repos/drd2/tile.cpp -o CMakeFiles/drd2.dir/tile.cpp.s
+	/usr/bin/clang++-6.0 $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/terry/repos/drd2/tile.cpp -o CMakeFiles/drd2.dir/tile.cpp.s
 
 CMakeFiles/drd2.dir/tile.cpp.o.requires:
 
@@ -252,15 +252,15 @@ CMakeFiles/drd2.dir/tile.cpp.o.provides.build: CMakeFiles/drd2.dir/tile.cpp.o
 CMakeFiles/drd2.dir/egg.cpp.o: CMakeFiles/drd2.dir/flags.make
 CMakeFiles/drd2.dir/egg.cpp.o: ../egg.cpp
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/terry/repos/drd2/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_9) "Building CXX object CMakeFiles/drd2.dir/egg.cpp.o"
-	/usr/bin/x86_64-linux-gnu-g++-7  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/drd2.dir/egg.cpp.o -c /home/terry/repos/drd2/egg.cpp
+	/usr/bin/clang++-6.0  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/drd2.dir/egg.cpp.o -c /home/terry/repos/drd2/egg.cpp
 
 CMakeFiles/drd2.dir/egg.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/drd2.dir/egg.cpp.i"
-	/usr/bin/x86_64-linux-gnu-g++-7 $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/terry/repos/drd2/egg.cpp > CMakeFiles/drd2.dir/egg.cpp.i
+	/usr/bin/clang++-6.0 $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/terry/repos/drd2/egg.cpp > CMakeFiles/drd2.dir/egg.cpp.i
 
 CMakeFiles/drd2.dir/egg.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/drd2.dir/egg.cpp.s"
-	/usr/bin/x86_64-linux-gnu-g++-7 $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/terry/repos/drd2/egg.cpp -o CMakeFiles/drd2.dir/egg.cpp.s
+	/usr/bin/clang++-6.0 $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/terry/repos/drd2/egg.cpp -o CMakeFiles/drd2.dir/egg.cpp.s
 
 CMakeFiles/drd2.dir/egg.cpp.o.requires:
 

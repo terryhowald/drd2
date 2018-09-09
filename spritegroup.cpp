@@ -14,6 +14,8 @@ SpriteGroup SpriteGroup::Copy()
     {
         new_group.Add(sprites[i]);
     }
+
+    return(new_group);
 }
 
 void SpriteGroup::Add(Sprite *sprite)

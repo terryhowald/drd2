@@ -14,7 +14,7 @@ set(CMAKE_DEPENDS_CHECK_CXX
   "/home/terry/repos/drd2/summary.cpp" "/home/terry/repos/drd2/build/CMakeFiles/drd2.dir/summary.cpp.o"
   "/home/terry/repos/drd2/tile.cpp" "/home/terry/repos/drd2/build/CMakeFiles/drd2.dir/tile.cpp.o"
   )
-set(CMAKE_CXX_COMPILER_ID "GNU")
+set(CMAKE_CXX_COMPILER_ID "Clang")
 
 # The include file search paths:
 set(CMAKE_CXX_TARGET_INCLUDE_PATH

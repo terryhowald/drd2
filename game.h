@@ -8,6 +8,7 @@
 #include <SDL2/SDL_ttf.h>
 #include "spritegroup.h"
 #include <string>
+#include <vector>
 
 enum 
 {
@@ -71,7 +72,7 @@ private:
 
     Mix_Chunk *m_pSquashWav;
     Mix_Chunk *m_pPhaserWav;    
-    Mix_Chunk *m_pScreamWavs[MAX_SCREAMS];
+    std::vector<Mix_Chunk*> m_vScreamWavs;
 
     struct EnemyInit
     {

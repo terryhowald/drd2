@@ -325,17 +325,18 @@ void Game::Update()
     if (SpriteCollide(player, pEnemyGroup, true))
     {
         // Make enemy dying sound
-        if(nullptr != m_pScreamWavs) 
+        if(0 != m_vScreamWavs.size()) 
         {
             int iScream = 0;
             do
             {
-                iScream = rand()%8;
+                iScream = rand() % MAX_SCREAMS;
                 //std::cout << "iScream = " << iScream << std::endl;
             } while(iScream == m_iScream);
             m_iScream = iScream;
 
-            Mix_PlayChannel(3, m_pScreamWavs[iScream], 0);
+            // Play scream
+            Mix_PlayChannel(3, m_vScreamWavs[iScream], 0);
             Mix_Volume(3, MIX_MAX_VOLUME/4);
         }
 
@@ -791,21 +792,28 @@ void Game::LoadWavs()
     m_pPhaserWav = Mix_LoadWAV(sPath.c_str()); 
     
     // Load scream sounds
-    sPath = m_sBasePath + "../snd/man_die_1.wav"; 
-    m_pScreamWavs[0] = Mix_LoadWAV(sPath.c_str()); 
+    sPath = m_sBasePath + "../snd/man_die_1.wav";  
+    m_vScreamWavs.push_back(Mix_LoadWAV(sPath.c_str()));
+
     sPath = m_sBasePath + "../snd/man_die_2.wav"; 
-    m_pScreamWavs[1] = Mix_LoadWAV(sPath.c_str());      
+    m_vScreamWavs.push_back(Mix_LoadWAV(sPath.c_str()));
+
     sPath = m_sBasePath + "../snd/man_die_3.wav"; 
-    m_pScreamWavs[2] = Mix_LoadWAV(sPath.c_str());       
+    m_vScreamWavs.push_back(Mix_LoadWAV(sPath.c_str())); 
+
     sPath = m_sBasePath + "../snd/man_die_4.wav"; 
-    m_pScreamWavs[3] = Mix_LoadWAV(sPath.c_str());     
+    m_vScreamWavs.push_back(Mix_LoadWAV(sPath.c_str()));
+
     sPath = m_sBasePath + "../snd/man_die_5.wav"; 
-    m_pScreamWavs[4] = Mix_LoadWAV(sPath.c_str());      
-    sPath = m_sBasePath + "../snd/man_die_6.wav"; 
-    m_pScreamWavs[5] = Mix_LoadWAV(sPath.c_str());     
+    m_vScreamWavs.push_back(Mix_LoadWAV(sPath.c_str()));
+
+    sPath = m_sBasePath + "../snd/man_die_6.wav";  
+    m_vScreamWavs.push_back(Mix_LoadWAV(sPath.c_str()));
+
     sPath = m_sBasePath + "../snd/man_die_7.wav"; 
-    m_pScreamWavs[6] = Mix_LoadWAV(sPath.c_str());     
+    m_vScreamWavs.push_back(Mix_LoadWAV(sPath.c_str()));
+
     sPath = m_sBasePath + "../snd/wilhelm_scream.wav"; 
-    m_pScreamWavs[7] = Mix_LoadWAV(sPath.c_str());             
+    m_vScreamWavs.push_back(Mix_LoadWAV(sPath.c_str()));            
 }
 

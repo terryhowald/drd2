@@ -61,6 +61,8 @@ spritegroup.h
 /home/terry/repos/drd2/spritegroup.h
 string
 -
+vector
+-
 
 /home/terry/repos/drd2/main.cpp
 game.h
