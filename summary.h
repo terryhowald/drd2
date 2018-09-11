@@ -1,7 +1,7 @@
 #ifndef SUMMARY_H
 #define SUMMARY_H
 
-#include "SDL2/SDL_ttf.h"
+#include <SDL2/SDL_ttf.h>
 #include <string>
 
 class Summary
