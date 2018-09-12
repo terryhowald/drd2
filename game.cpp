@@ -538,6 +538,7 @@ void Game::LoadMap()
     }
 
     // Setup tiles
+    std::string sTiles = m_sBasePath + "../img/rock_tile.png";
     for (int row = 0; row < MAP_WIDTH; row++)
     {
         for (int column = 0; column < MAP_HEIGHT; column++)
@@ -545,7 +546,7 @@ void Game::LoadMap()
             int iTile = tilemap[row][column];
             if (iTile)
             {
-                Tile *tile = new Tile("/home/terry/repos/drd2/img/rock_tile.png", row * TILE_SIZE, column * TILE_SIZE);
+                Tile *tile = new Tile(sTiles.c_str(), row * TILE_SIZE, column * TILE_SIZE);
                 pTileGroup->Add(tile);
             }
         }
